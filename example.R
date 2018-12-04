@@ -1,7 +1,7 @@
 
 # Munge original data -----------------------------------------------------
 
-origData = munge_orig_dat()
+origData = munge_orig_dat(example = T)
 
 # Visualize original data -------------------------------------------------
 
