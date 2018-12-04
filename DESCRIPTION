@@ -1,0 +1,11 @@
+Package: regimeDetectionMeasures
+Type: Package
+Title: Calculate A Suite of Measures for Detecting Ecological Regimes
+Version: 0.1.0
+Author: Jessica L. Burnett
+Maintainer: Jessica L. Burnett <jessicaleighburnett@gmail.com>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
