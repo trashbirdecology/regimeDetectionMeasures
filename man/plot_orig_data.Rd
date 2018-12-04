@@ -14,9 +14,6 @@ plot_orig_data(data, example = F, print = T, save = F)
 \value{
 Function returns a data frame in long format with columns specifying site name, time (or spatial unit), variable (e.g. species identity), and value (e.g. species count).
 }
-\description{
-Plot original data
-}
 \examples{
 df <- munge_orig_dat()
 plot_orig_data(df)

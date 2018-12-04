@@ -17,6 +17,3 @@ rdm_window_analysis(dataIn, winMove = 0.25, overrideSiteErr = F,
 
 \item{min.windowdat}{Minimum # of data points in each window to include in calculations. Default = 2.}
 }
-\description{
-Plot original data
-}

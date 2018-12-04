@@ -13,6 +13,3 @@ calculate_EWS(dataIn, winMove)
 
 \item{distances}{A data frame of the distances and dervatives of distance travelled at each time point.}
 }
-\description{
-Calculate the early warning signals
-}

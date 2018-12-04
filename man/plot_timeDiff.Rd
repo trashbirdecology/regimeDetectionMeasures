@@ -14,9 +14,6 @@ plot_timeDiff(data, example = F, print = T, save = F)
 \value{
 Function returns a data frame in long format with columns specifying site name, time (or spatial unit), variable (e.g. species identity), and value (e.g. species count).
 }
-\description{
-Plot units of time elapsed between sampling points over the time series.
-}
 \examples{
 df <- munge_orig_dat()
 plot_timeDiff(df)

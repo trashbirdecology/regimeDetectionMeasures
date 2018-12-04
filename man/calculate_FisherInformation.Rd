@@ -10,6 +10,3 @@ calculate_FisherInformation(dataIn, min.window.dat = 2,
 \arguments{
 \item{dataIn}{A subset of data for each moving window. These data will be used to calculate the Fisher Information}
 }
-\description{
-Fisher Information: three equations for calculating.
-}

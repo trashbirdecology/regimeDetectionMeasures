@@ -6,9 +6,6 @@
 \usage{
 calculate_VI(winData)
 }
-\description{
-Calculate the Variance Index
-}
 \references{
 [1] Brock and Carpenter YYYY
 }

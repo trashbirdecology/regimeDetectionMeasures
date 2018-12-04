@@ -9,6 +9,3 @@ calculate_distanceTravelled(dataIn, derivs = T, print = T)
 \arguments{
 \item{print}{}
 }
-\description{
-Calculate the `distance travelled` by the entire system. Also calculates the velocity and acceleration of the entire system over the time series.
-}

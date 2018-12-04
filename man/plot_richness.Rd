@@ -14,9 +14,6 @@ plot_richness(data, example = F, print = T, save = F)
 \value{
 Function returns a data frame in long format with columns specifying site name, time (or spatial unit), variable (e.g. species identity), and value (e.g. species count).
 }
-\description{
-Plot species richness over time for the original data
-}
 \examples{
 df <- munge_orig_dat()
 plot_richness(df)
