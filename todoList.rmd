@@ -1,0 +1,7 @@
+## To Do: regimeDetectionMeasures package
+
+1. Create a vignette
+1. Function: plot_XX -- Export gg objects. Notes: currently the function only prints to screen. Function is not returning a gg object. 
+1. Create alternative example which does not rely on the internet OR save the Spanbuaer et al. dataframe to the package. 
+1. 
+
