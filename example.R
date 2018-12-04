@@ -22,18 +22,5 @@ distances = calculate_distanceTravelled(origData, derivs = T)
 results = rdm_window_analysis(origData, winMove = 0.25, overrideSiteErr = F, min.window.dat = 2, fi.equation = "7.12", to.calc = 'VI')
 
 
-
-# Interpolate the results -------------------------------------------------
-
-FI_VI <- results$fiVi
-EWS <- results$ews
-
-
-# Create plots ------------------------------------------------------------
-
-
-
-
-
 # END RUN -----------------------------------------------------------------
 
