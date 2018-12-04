@@ -5,7 +5,8 @@
 date()
 ```
 
-1. Create a vignette (or maybe wait to associate with an ms)  
+1. Create a vignette (or maybe wait to associate with an ms) 
+1. Shorten function names!
 1. Function: plot_XX -- Export gg objects. Notes: currently the function only prints   to screen. Function is not returning a gg object.   
 1. Create alternative example which does not rely on the internet OR save the Spanbuaer et al. dataframe to the package.   
 1. Make the `calculate_FI_` function operable outside the `rdm_window_analysis` function.  
