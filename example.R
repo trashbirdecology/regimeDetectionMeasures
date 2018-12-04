@@ -33,5 +33,9 @@ results <-
         to.calc = 'VI'
     )
 
-
+results$FI_VI %>%
+    gather(key = index_type, value = index_value, FI, VI) %>%
+    ggplot(mapping = aes(x = winStart, y = index_value)) +
+    facet_wrap(~index_type) +
+    geom_line()
 # END RUN --------------------------------------------------------
