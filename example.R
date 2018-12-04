@@ -15,13 +15,22 @@ plot_richness(data = origData, example = F, print = T)
 
 distances = calculate_distanceTravelled(origData, derivs = T)
 
-df2 = merge(distances, origData)
 
-
-# calculate FI, VI, and early warning signals --------------------------------------------------------
+# Calculate FI, VI, and early warning signals --------------------------------------------------------
 
 # Uses a moving window analysis to calculate FI and Vi within each window
-results = rdm_window_analysis(origData, winMove = 0.25, overrideSiteErr = F, min.window.dat = 2, fi.equation = "7.12")
+results = rdm_window_analysis(origData, winMove = 0.25, overrideSiteErr = F, min.window.dat = 2, fi.equation = "7.12", to.calc = 'VI')
+
+
+
+# Interpolate the results -------------------------------------------------
+
+FI_VI <- results$fiVi
+EWS <- results$ews
+
+
+# Create plots ------------------------------------------------------------
+
 
 
 
