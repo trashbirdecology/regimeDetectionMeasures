@@ -5,19 +5,24 @@ origData = munge_orig_dat(example = T)
 
 # Visualize original data -------------------------------------------------
 
+# Plot the original time series abundances
 plot_orig_data(data = origData,
                example = F,
                print = T)
+
+# Plot the distance between observations
 plot_timeDiff(data = origData,
               example = F,
               print = T)
+
+# Plot species richness over time
 plot_richness(data = origData,
               example = F,
               print = T)
 
 # Calculate distance travelled and derviatves of this ---------------------
 
-distances = calculate_distanceTravelled(origData, derivs = T)
+(distances <- calculate_distanceTravelled(origData, derivs = T))
 
 
 # Calculate FI, VI, and early warning signals --------------------------------------------------------
@@ -30,7 +35,7 @@ results <-
         overrideSiteErr = F,
         min.window.dat = 2,
         fi.equation = "7.12",
-        to.calc = 'VI'
+        to.calc = c('EWS', 'VI')
     )
 
 
