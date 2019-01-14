@@ -78,7 +78,7 @@ plot_richness <-
              save = F,
             xLabel = "time") {
         temp <- data %>%
-            group_by(time) %>%
+          #   group_by(time) %>%
             filter(value > 0) %>%
             mutate(nSpp = n())
 
@@ -141,7 +141,7 @@ plot_timeDiff <-
              save = F,
             xLabel = "time"){
         temp <- data %>%
-            group_by(time) %>%
+            # group_by(time) %>%
             filter(value > 0) %>%
             select(-site,-value,-variable) %>%
             distinct(time, .keep_all = T) %>%
