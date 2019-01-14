@@ -38,7 +38,7 @@ rdm_window_analysis <- function(dataIn,
             max(dataIn$time) - winSize,
             by = winSpace
         ), 2)
-    winStop <- winStart + winSize
+    winStop <- round(winStart + winSize, 2)
 
 
     # Number of windows
