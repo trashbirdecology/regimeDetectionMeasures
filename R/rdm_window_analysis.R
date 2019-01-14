@@ -31,7 +31,7 @@ rdm_window_analysis <- function(dataIn,
     warning(paste0("Each window will move forward by ~", round(winSpace, digits = 5), " time units."))
 
 
-     # Start and stop points for windows
+    # Start and stop points for windows
     winStart <-
         round(seq(
             min(dataIn$time),
@@ -39,7 +39,6 @@ rdm_window_analysis <- function(dataIn,
             by = winSpace
         ), 2)
     winStop <- round(winStart + winSize, 2)
-
 
     # Number of windows
     nWin <- length(winStart)
@@ -64,17 +63,17 @@ rdm_window_analysis <- function(dataIn,
         } # Skip this window if there are less than two observations in the window
 
 
-        if(to.calc %in% 'FI'){
+        if('FI'  %in% to.calc ){
         # Calculate FI
         FI[i] <- calculate_FisherInformation(winData %>%  select(-site), fi.equation = fi.equation)
         }
 
-        if(to.calc %in% 'VI'){
+        if('VI'  %in% to.calc){
         # Calculate variance indexs
         VI[i] <- calculate_VI(winData)
         }
 
-        if(to.calc %in% 'EWS'){
+        if('EWS'  %in% to.calc){
         EWS <- calculate_EWS(winData) %>%
             rbind(EWS)
         }
