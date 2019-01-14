@@ -2,6 +2,7 @@
 #' @param winMove Number as proportion of each time series to be included in the moving windows. Default = 0.25 (25% of data included in each window).
 #' @param min.windowdat Minimum # of data points in each window to include in calculations. Default = 2.
 #' @param overrideSiteErr
+#' @param fill Used in the function 'calculate_VI()'. Fill value for missing data. Default = 0
 #' @param min.window.dat Used in calc_FisherInformation. Default = 2 data points
 #'@param to.calc Which measures to calculate. VI variance index. FI Fisher Information. EWS 1st through 4th moments, etc. Default = ALL measures.
 #' @export
@@ -10,8 +11,8 @@ rdm_window_analysis <- function(dataIn,
                                 overrideSiteErr = F,
                                 min.window.dat = 2,
                                 fi.equation = '7.12',
-
                                 to.calc = c('VI', 'FI', 'EWS')
+                                fill
                                 ) {
     if(winMove > 1 | winMove < 1e-10){stop('winMove must be a number between zero and one')}
 
