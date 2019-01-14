@@ -2,7 +2,7 @@ Package: regimeDetectionMeasures
 Type: Package
 Title: Calculate Measures for Detecting Ecological Regimes
 Version: 0.1.0
-License: What license is it under?
+License: MIT + file LICENSE 
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.1.2), dplyr, tidyr, ggplot2, PerformanceAnalytics
