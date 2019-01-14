@@ -52,7 +52,11 @@ rdm_window_analysis <- function(dataIn,
 
     # Calculate across each window
     for (i in 1:nWin) {
-
+       # Break the loop if not enough time points!
+        if (length(unique(winData$time)) <= min.window.dat) {
+          warning("Five or fewer time points -- need more to calculate metrics.")
+          next
+        }
         # Gather the time series data within our window
         winData <- dataIn %>%
             filter(time >= winStart[i],
