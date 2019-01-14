@@ -14,82 +14,58 @@ rdm_window_analysis <- function(dataIn,
                                 to.calc = c('VI', 'FI', 'EWS'),
                                 fill = 0
                                 ) {
-    if(winMove > 1 | winMove < 1e-10){stop('winMove must be a number between zero and one')}
-    if(dataIn$time <5){stop("Five or less time points in the data frame")}
-    # if(unique(dataIn$site) > 1 & overrideSiteErr == F){stop(" # of unique sites in data frame is > 1. Remove sites or override error using `overrideSiteErr = T`")}
-
-
-    # Window size
-    time <- dataIn$time
-    timeSpan <- range(time)
-    TT <- timeSpan[2] - timeSpan[1]
-
-    winSize <- winMove * TT
-    warning(paste0("FYI: Each window will contain ", winSize, " time units."))
-
-    # Window spacing
-    winSpace <- max(lead(time) - time, na.rm = T)
-    warning(paste0("FYI: Each window will move forward by ~", round(winSpace, digits = 5), " time units."))
-
-
-    # Start and stop points for windows
-    winStart <-
-        round(seq(
-            min(dataIn$time),
-            max(dataIn$time) - winSize,
-            by = winSpace
-        ), 5)
-    winStop <- round(winStart + winSize, 5)
-
-    # Number of windows
-    nWin <- length(winStart)
-    # warning("# of windows in the analysis: ", nWin)
-
-    # Create empty objects in which to input the results.
-    FI <- numeric(nWin) # will get one value per window
-    VI <- numeric(nWin) # will get one value per window
-    EWS <- NULL #  # will get one value per window AND per species
-
-    # Calculate across each window
-    for (i in 1:nWin) {
-       # Break the loop if not enough time points!
-        if (length(unique(winData$time)) <= min.window.dat) {
-          warning("Five or fewer time points -- need more to calculate metrics.")
-          next
-        }
-        # Gather the time series data within our window
-        winData <- dataIn %>%
-            filter(time >= winStart[i],
-                   time < winStop[i]) %>%
-            distinct() # just to be sure there are no duplicates
-
-        if(nrow(winData) <= min.window.dat) {
-            warning("Two or less observations in window")
-            next
-        } # Skip this window if there are less than two observations in the window
-
-
-        if('FI'  %in% to.calc ){
-        # Calculate FI
-        FI[i] <- calculate_FisherInformation(winData %>%  select(-site), fi.equation = fi.equation)
-        }
-
-        if('VI'  %in% to.calc){
-        # Calculate variance indexs
-        VI[i] <- calculate_VI(winData)
-        }
-
-        if('EWS'  %in% to.calc){
-        EWS <- calculate_EWS(winData) %>%
-            rbind(EWS)
-        }
-    }
-
-    resultsOut = list()
-    resultsOut$FI_VI <- data_frame(winStart, winStop, FI, VI)
-    resultsOut$ews <- EWS
-
-    return(resultsOut)
-
-
+ if (winMove > 1 | winMove < 1e-10) {
+  stop("winMove must be a number between zero and one")
 }
+if (dataIn$time < 5) {
+  stop("Five or less time points in the data frame")
+}
+time <- dataIn$time
+timeSpan <- range(time)
+TT <- timeSpan[2] - timeSpan[1]
+winSize <- winMove * TT
+warning(paste0("FYI: Each window will contain ", winSize, 
+               " time units."))
+winSpace <- max(lead(time) - time, na.rm = T)
+warning(paste0("FYI: Each window will move forward by ~", 
+               round(winSpace, digits = 5), " time units."))
+winStart <- round(seq(min(dataIn$time), max(dataIn$time) - 
+                        winSize, by = winSpace), 5)
+winStop <- round(winStart + winSize, 5)
+nWin <- length(winStart)
+FI <- numeric(nWin)
+VI <- numeric(nWin)
+EWS <- NULL
+
+
+for (i in 1:nWin) {
+  if (length(unique(dataIn$time)) <= min.window.dat) {
+    warning("Five or fewer time points -- need more to calculate metrics.")
+    next
+  }
+  winData <- dataIn %>% filter(time >= winStart[i], time < 
+                                 winStop[i]) %>% distinct()
+  if (nrow(winData) <= min.window.dat) {
+    warning("Two or less observations in window")
+    next
+  }
+  if(length(unique(winData$time)) <5){
+    warning("Five or less time points in the window, skipping window")
+    next
+    }
+  
+  if ("FI" %in% to.calc) {
+    FI[i] <- calculate_FisherInformation(winData %>% 
+                                           select(-site), fi.equation = fi.equation)
+  }
+  if ("VI" %in% to.calc) {
+    VI[i] <- calculate_VI(winData)
+  }
+  if ("EWS" %in% to.calc) {
+    EWS <- calculate_EWS(winData) %>% rbind(EWS)
+  }
+}
+resultsOut = list()
+resultsOut$FI_VI <- data_frame(winStart, winStop, FI, VI)
+resultsOut$ews <- EWS
+return(resultsOut)
