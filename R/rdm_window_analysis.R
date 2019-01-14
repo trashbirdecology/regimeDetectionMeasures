@@ -13,7 +13,7 @@ rdm_window_analysis <- function(dataIn,
                                 fi.equation = '7.12',
                                 to.calc = c('VI', 'FI', 'EWS'),
                                 fill = 0
-                                ) {
+                                ){
  if (winMove > 1 | winMove < 1e-10) {
   stop("winMove must be a number between zero and one")
 }
