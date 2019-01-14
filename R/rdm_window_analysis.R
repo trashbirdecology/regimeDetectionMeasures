@@ -31,14 +31,15 @@ rdm_window_analysis <- function(dataIn,
     warning(paste0("Each window will move forward by ~", round(winSpace, digits = 5), " time units."))
 
 
-    # Start and stop points for windows
+     # Start and stop points for windows
     winStart <-
         round(seq(
             min(dataIn$time),
             max(dataIn$time) - winSize,
             by = winSpace
-        ))
+        ), 2)
     winStop <- winStart + winSize
+
 
     # Number of windows
     nWin <- length(winStart)
