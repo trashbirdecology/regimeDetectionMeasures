@@ -146,10 +146,11 @@ plot_timeDiff <-
             select(-site,-value,-variable) %>%
             distinct(time, .keep_all = T) %>%
             arrange(time) %>%
-            ungroup() %>%
+            #ungroup() %>%
             mutate(sampDiff = as.integer(round(abs(
                 lead(time) - time
-            ))))
+            ))))%>%
+            as_data_frame()
 
         p1 <- ggplot(data = temp, aes(y =  sampDiff, x = time)) +
             geom_line() +
