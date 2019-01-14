@@ -69,3 +69,5 @@ resultsOut = list()
 resultsOut$FI_VI <- data_frame(winStart, winStop, FI, VI)
 resultsOut$ews <- EWS
 return(resultsOut)
+
+  }
