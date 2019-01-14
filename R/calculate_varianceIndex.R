@@ -1,9 +1,10 @@
 #' @title Calculate the Variance Index
 #' @param winData
 #' @param dataIn
+#' @param fill Fill for missing data (default = 0)
 #' @references [1] Brock and Carpenter YYYY
 #' @export
-calculate_VI <- function(winData) {
+calculate_VI <- function(winData, fill = 0) {
 
     ts <-
         winData %>%
@@ -14,7 +15,7 @@ calculate_VI <- function(winData) {
         filter(sumValue > 0) %>%
         select(-sumValue) %>%
         # unique() %>%
-        spread(variable, value) %>%
+        spread(variable, value, fill = fill) %>%
         select(-time) %>%
         as.matrix()
 
