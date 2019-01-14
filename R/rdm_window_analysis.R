@@ -24,11 +24,11 @@ rdm_window_analysis <- function(dataIn,
     TT <- timeSpan[2] - timeSpan[1]
 
     winSize <- winMove * TT
-    warning(paste0("Each window will contain ", winSize, " time units."))
+    warning(paste0("FYI: Each window will contain ", winSize, " time units."))
 
     # Window spacing
     winSpace <- max(lead(time) - time, na.rm = T)
-    warning(paste0("Each window will move forward by ~", round(winSpace, digits = 5), " time units."))
+    warning(paste0("FYI: Each window will move forward by ~", round(winSpace, digits = 5), " time units."))
 
 
     # Start and stop points for windows
@@ -37,8 +37,8 @@ rdm_window_analysis <- function(dataIn,
             min(dataIn$time),
             max(dataIn$time) - winSize,
             by = winSpace
-        ), 2)
-    winStop <- round(winStart + winSize, 2)
+        ), 5)
+    winStop <- round(winStart + winSize, 5)
 
     # Number of windows
     nWin <- length(winStart)
