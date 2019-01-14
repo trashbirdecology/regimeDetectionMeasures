@@ -21,11 +21,13 @@ plot_orig_data <-
     function(data,
              example = F,
              print = T,
-             save = F) {
+             save = F, 
+             xLabel = "time") {
         p1 <- ggplot(data) +
             geom_line(aes(x = time, y = value, color = variable), size = .65) +
             theme_classic() +
-            theme(legend.position = 'none')
+            theme(legend.position = 'none') +
+        xlab(xLabel)
 
         if (example == T) {
             p1 <- p1 +
@@ -73,7 +75,8 @@ plot_richness <-
     function(data,
              example = F,
              print = T,
-             save = F) {
+             save = F,
+            xLabel = "time") {
         temp <- data %>%
             group_by(time) %>%
             filter(value > 0) %>%
@@ -81,7 +84,8 @@ plot_richness <-
 
         p1 <- ggplot(data = temp, aes(y =  nSpp, x = time)) +
             geom_line() +
-            theme_classic()
+            theme_classic() +
+        xlab(xLabel)
 
 
         if (example == T) {
@@ -134,7 +138,8 @@ plot_timeDiff <-
     function(data,
              example = F,
              print = T,
-             save = F){
+             save = F,
+            xLabel = "time"){
         temp <- data %>%
             group_by(time) %>%
             filter(value > 0) %>%
@@ -148,7 +153,8 @@ plot_timeDiff <-
 
         p1 <- ggplot(data = temp, aes(y =  sampDiff, x = time)) +
             geom_line() +
-            theme_classic()
+            theme_classic() +
+        xlab(xLabel)
 
 
         if (example == T) {
