@@ -55,7 +55,8 @@ rdm_window_analysis <- function(dataIn,
         # Gather the time series data within our window
         winData <- dataIn %>%
             filter(time >= winStart[i],
-                   time < winStop[i])
+                   time < winStop[i]) %>%
+            distinct() # just to be sure there are no duplicates
 
         if(nrow(winData) <= min.window.dat) {
             warning("Two or less observations in window")
