@@ -15,7 +15,7 @@ rdm_window_analysis <- function(dataIn,
                                 fill = 0
                                 ) {
     if(winMove > 1 | winMove < 1e-10){stop('winMove must be a number between zero and one')}
-
+    if(dataIn$time <5){stop("Five or less time points in the data frame")}
     # if(unique(dataIn$site) > 1 & overrideSiteErr == F){stop(" # of unique sites in data frame is > 1. Remove sites or override error using `overrideSiteErr = T`")}
 
 
