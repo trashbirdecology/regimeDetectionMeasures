@@ -61,7 +61,7 @@ for (i in 1:nWin) {
                                            select(-site), fi.equation = fi.equation)
   }
   if ("VI" %in% to.calc) {
-    VI[i] <- calculate_VI(winData)
+    VI[i] <- calculate_VI(winData,  fill)
   }
   if ("EWS" %in% to.calc) {
     EWS <- calculate_EWS(winData) %>% rbind(EWS)
