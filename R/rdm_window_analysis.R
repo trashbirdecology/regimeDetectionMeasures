@@ -61,7 +61,7 @@ for (i in 1:nWin) {
   }
 }
 resultsOut = list()
-resultsOut$FI_VI <- tibble(winStart, winStop, FI, VI)
+resultsOut$FI_VI <- as_tibble(winStart, winStop, FI, VI)
 resultsOut$ews <- EWS
 return(resultsOut)
 
