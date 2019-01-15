@@ -18,10 +18,7 @@ rdm_window_analysis <- function(dataIn,
   stop("winMove must be a number between zero and one")
 }
  if (length(unique(dataIn$time)) < 5) {
-  next("Five or less time points in the data frame")
-      FI[i] <- NA
-      VI[i] <- NA
-  
+  next("Five or less time points in the data frame") 
 }
 time <- dataIn$time
 timeSpan <- range(time)
@@ -35,9 +32,10 @@ warning(paste0("FYI: Each window will move forward by ~",
 winStart <- round(seq(min(dataIn$time), max(dataIn$time) - winSize, by = winSpace), 5)
 winStop <- round(winStart + winSize, 5)
 nWin <- length(winStart)
-FI <- NULL
-VI <- NULL
+FI <- as.numeric(rep(NA, nWin))
+VI <- as.numeric(rep(NA, nWin))
 EWS <- NULL
+ ## Begin window for-loop to analyze FI, VI and EWSs
 for (i in 1:nWin) {
   
   winData <- dataIn %>% filter(time >= winStart[i], time <
