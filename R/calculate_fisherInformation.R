@@ -22,6 +22,7 @@ calculate_FisherInformation <- function(dataIn, min.window.dat = 2,  fi.equation
 
     if(nrow(data) <= min.window.dat) {
         warning("Two or less observations in window")
+        next
     }
 
     if (fi.equation == "7.3b") {
