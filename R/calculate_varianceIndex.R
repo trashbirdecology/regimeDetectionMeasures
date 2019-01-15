@@ -1,26 +1,26 @@
 #' @title Calculate the Variance Index
 #' @param winData
 #' @param dataIn
-#' @param fill Fill for missing data (default = 0)
-#' @references [1] Brock and Carpenter YYYY
+#' @param fill Fill for missing data. Default = 0.
+#' @references [1] Brock, William A., and Stephen R. Carpenter. "Variance as a leading indicator of regime shift in ecosystem services." Ecology and Society 11.2 (2006).
 #' @export
 calculate_VI <- function(winData, fill = 0) {
- 
+
   # Remove site variable if present
   if("site" %in% colnames(winData)){
     winData <- winData %>% dplyr::select(-site)
       }
-# Create the time series to analyse    
+# Create the time series to analyse
    ts <-
     winData %>%
-    distinct() %>% 
+    distinct() %>%
     group_by(variable) %>%
     mutate(sumValue = sum(value)) %>%
     filter(sumValue > 0) %>%
     select(-sumValue) %>%
-    group_by(variable, time) %>% 
+    group_by(variable, time) %>%
     summarise(value = max(value)) %>%
-    ungroup() %>% 
+    ungroup() %>%
     spread(variable, value, fill = fill) %>%
     select(-time) %>%
     as.matrix()
