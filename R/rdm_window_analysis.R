@@ -17,7 +17,7 @@ rdm_window_analysis <- function(dataIn,
  if (winMove > 1 | winMove < 1e-10) {
   stop("winMove must be a number between zero and one")
 }
-if (dataIn$time < 5) {
+ if (length(unique(dataIn$time)) < 5) {
   next("Five or less time points in the data frame")
 }
 time <- dataIn$time
