@@ -29,30 +29,32 @@ warning(paste0("FYI: Each window will contain ", winSize,
 winSpace <- max(lead(time) - time, na.rm = T)
 warning(paste0("FYI: Each window will move forward by ~", 
                round(winSpace, digits = 5), " time units."))
-winStart <- round(seq(min(dataIn$time), max(dataIn$time) - 
-                        winSize, by = winSpace), 5)
+winStart <- round(seq(min(dataIn$time), max(dataIn$time) - winSize, by = winSpace), 5)
 winStop <- round(winStart + winSize, 5)
 nWin <- length(winStart)
 FI <- numeric(nWin)
 VI <- numeric(nWin)
 EWS <- NULL
-
-
 for (i in 1:nWin) {
-  if (length(unique(dataIn$time)) <= min.window.dat) {
-    warning("Five or fewer time points -- need more to calculate metrics.")
+  
+  winData <- dataIn %>% filter(time >= winStart[i], time <
+                                 winStop[i]) %>%
+    distinct()
+  
+  if (length(unique(winData$time)) <= min.window.dat) {
+    warning("Five or fewer time points -- need more to calculate metrics. Skipping window.")
     next
-  }
-  winData <- dataIn %>% filter(time >= winStart[i], time < 
-                                 winStop[i]) %>% distinct()
+  }else(
   if (nrow(winData) <= min.window.dat) {
-    warning("Two or less observations in window")
+    warning("Two or less observations in window. Skipping window.")
+    next
+  }else(
+  
+  if (length(unique(winData$time)) < 5) {
+    warning("Five or less time points in the window. Skipping window.")
     next
   }
-  if(length(unique(winData$time)) <5){
-    warning("Five or less time points in the window, skipping window")
-    next
-    }
+  ))
   
   if ("FI" %in% to.calc) {
     FI[i] <- calculate_FisherInformation(winData %>% 
@@ -69,5 +71,5 @@ resultsOut = list()
 resultsOut$FI_VI <- data_frame(winStart, winStop, FI, VI)
 resultsOut$ews <- EWS
 return(resultsOut)
-
-  }
+    
+    }
