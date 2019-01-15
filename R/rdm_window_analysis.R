@@ -32,8 +32,8 @@ warning(paste0("FYI: Each window will move forward by ~",
 winStart <- round(seq(min(dataIn$time), max(dataIn$time) - winSize, by = winSpace), 5)
 winStop <- round(winStart + winSize, 5)
 nWin <- length(winStart)
-FI <- numeric(nWin)
-VI <- numeric(nWin)
+FI <- NULL
+VI <- NULL
 EWS <- NULL
 for (i in 1:nWin) {
   
