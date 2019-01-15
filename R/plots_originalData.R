@@ -2,7 +2,7 @@
 #'
 #' @param origData
 #' @param example
-#' @param
+#' @param xLabel Option to change the xLabel on resultant ggplot from "time" to ...
 #' @param print print plots to device when print = T. Default print = T.
 #' @param save NEEDS TO BE UPDATED TO CREATE LOCAL PLOT FOLDER AND EXPORT TO THIS FOLDER. JLB.
 #' @return Function returns a data frame in long format with columns specifying site name, time (or spatial unit), variable (e.g. species identity), and value (e.g. species count).
@@ -21,7 +21,7 @@ plot_orig_data <-
     function(data,
              example = F,
              print = T,
-             save = F, 
+             save = F,
              xLabel = "time") {
         p1 <- ggplot(data) +
             geom_line(aes(x = time, y = value, color = variable), size = .65) +

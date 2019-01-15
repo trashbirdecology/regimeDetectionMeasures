@@ -1,4 +1,5 @@
 #' @title Plot original data
+#' @param dataIn A data frame in long format. See description **NEED TO UPDATE THIS!**
 #' @param winMove Number as proportion of each time series to be included in the moving windows. Default = 0.25 (25% of data included in each window).
 #' @param min.windowdat Minimum # of data points in each window to include in calculations. Default = 2.
 #' @param overrideSiteErr
@@ -18,30 +19,31 @@ rdm_window_analysis <- function(dataIn,
   stop("winMove must be a number between zero and one")
 }
  if (length(unique(dataIn$time)) < 5) {
-  next("Five or less time points in the data frame") 
+  next("Five or less time points in the data frame")
 }
 time <- dataIn$time
 timeSpan <- range(time)
 TT <- timeSpan[2] - timeSpan[1]
 winSize <- winMove * TT
-warning(paste0("FYI: Each window will contain ", winSize, 
-               " time units."))
+message(paste0("FYI: Windows ~= ", winSize,
+               " time units"))
 winSpace <- max(lead(time) - time, na.rm = T)
-warning(paste0("FYI: Each window will move forward by ~", 
+message(paste0("FYI: Windows advance by ~",
                round(winSpace, digits = 5), " time units."))
 winStart <- round(seq(min(dataIn$time), max(dataIn$time) - winSize, by = winSpace), 5)
 winStop <- round(winStart + winSize, 5)
 nWin <- length(winStart)
-FI <- as.numeric(rep(NA, nWin))
-VI <- as.numeric(rep(NA, nWin))
+FI <- c()
+VI <- c()
+
 EWS <- NULL
  ## Begin window for-loop to analyze FI, VI and EWSs
 for (i in 1:nWin) {
-  
+
   winData <- dataIn %>% filter(time >= winStart[i], time <
                                  winStop[i]) %>%
     distinct()
-  # Leave loop if not enough data points 
+  # Leave loop if not enough data points
   if (length(unique(winData$time)) < min.window.dat | nrow(winData) <= min.window.dat) {
     warning("Fewer than min.window.dat time points -- need more to calculate metrics. Skipping window.")
     next
@@ -49,7 +51,7 @@ for (i in 1:nWin) {
 
   # Calcuate the metrics if in argument to.calc
   if ("FI" %in% to.calc) {
-    FI[i] <- calculate_FisherInformation(winData, fi.equation = fi.equation)
+    FI[i] <- calculate_FisherInformation(dataInFI = winData, fi.equation = fi.equation)
   }
   if ("VI" %in% to.calc) {
     VI[i] <- calculate_VI(winData,  fill)
@@ -59,8 +61,8 @@ for (i in 1:nWin) {
   }
 }
 resultsOut = list()
-resultsOut$FI_VI <- data_frame(winStart, winStop, FI, VI)
+resultsOut$FI_VI <- tibble(winStart, winStop, FI, VI)
 resultsOut$ews <- EWS
 return(resultsOut)
-    
+
     }
