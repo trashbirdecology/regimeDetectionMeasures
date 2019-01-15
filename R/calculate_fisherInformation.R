@@ -7,7 +7,7 @@
 #'
 calculate_FisherInformation <- function(dataIn, min.window.dat = 2,  fi.equation =  "7.12") {
   
-  if(fi.equation == 7.12){warning("Using FI equation 7.12. Calculating distances about input data ");
+  if(fi.equation == 7.12){message("Using FI equation 7.12. Calculating distances about input data ");
     dataIn = calculate_distanceTravelled(dataIn, derivs = T)
   }
   
