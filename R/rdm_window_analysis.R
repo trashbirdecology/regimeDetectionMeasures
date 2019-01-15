@@ -40,22 +40,13 @@ for (i in 1:nWin) {
   winData <- dataIn %>% filter(time >= winStart[i], time <
                                  winStop[i]) %>%
     distinct()
-  
-  if (length(unique(winData$time)) <= min.window.dat) {
-    warning("Five or fewer time points -- need more to calculate metrics. Skipping window.")
-    next
-  }else(
-  if (nrow(winData) <= min.window.dat) {
-    warning("Two or less observations in window. Skipping window.")
-    next
-  }else(
-  
-  if (length(unique(winData$time)) < 5) {
-    warning("Five or less time points in the window. Skipping window.")
+  # Leave loop if not enough data points 
+  if (length(unique(winData$time)) < min.window.dat | nrow(winData) <= min.window.dat) {
+    warning("Fewer than min.window.dat time points -- need more to calculate metrics. Skipping window.")
     next
   }
-  ))
-  
+
+  # Calcuate the metrics if in argument to.calc
   if ("FI" %in% to.calc) {
     FI[i] <- calculate_FisherInformation(winData %>% 
                                            select(-site), fi.equation = fi.equation)
