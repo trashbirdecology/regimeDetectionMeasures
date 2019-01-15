@@ -49,8 +49,7 @@ for (i in 1:nWin) {
 
   # Calcuate the metrics if in argument to.calc
   if ("FI" %in% to.calc) {
-    FI[i] <- calculate_FisherInformation(winData %>% 
-                                           select(-site), fi.equation = fi.equation)
+    FI[i] <- calculate_FisherInformation(winData, fi.equation = fi.equation)
   }
   if ("VI" %in% to.calc) {
     VI[i] <- calculate_VI(winData,  fill)
