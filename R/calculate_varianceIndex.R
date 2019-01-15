@@ -10,6 +10,10 @@ calculate_VI <- function(winData, fill = 0) {
   if("site" %in% colnames(winData)){
     winData <- winData %>% dplyr::select(-site)
       }
+  # Ensure fill works (having troubles..)
+  if(!exists("fill")){
+  fill = 0
+}
 # Create the time series to analyse
    ts <-
     winData %>%
