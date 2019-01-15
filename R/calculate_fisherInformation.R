@@ -58,9 +58,9 @@ calculate_FisherInformation <- function(dataIn, min.window.dat = 2,  fi.equation
       )){
     warning("Unrecognized equation supplied (fi.equation must be one of c(7.3b, 7.3c, 7.12)");break}
 
-  if(!exists("FI"){
-   FI <- NULL
-  }
+ # if(!exists("FI"){
+ #  FI <- NULL
+ # }
    
   return(FI)
 }
