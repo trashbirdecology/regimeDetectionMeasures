@@ -14,55 +14,76 @@ rdm_window_analysis <- function(dataIn,
                                 fi.equation = '7.12',
                                 to.calc = c('VI', 'FI', 'EWS'),
                                 fill = 0
-                                ){
- if (winMove > 1 | winMove < 1e-10) {
-  stop("winMove must be a number between zero and one")
-}
- if (length(unique(dataIn$time)) < 5) {
-  next("Five or less time points in the data frame")
-}
-time <- dataIn$time
-timeSpan <- range(time)
-TT <- timeSpan[2] - timeSpan[1]
-winSize <- winMove * TT
-message(paste0("FYI: Windows ~= ", winSize,
-               " time units"))
-winSpace <- max(lead(time) - time, na.rm = T)
-message(paste0("FYI: Windows advance by ~",
-               round(winSpace, digits = 5), " time units."))
-winStart <- round(seq(min(dataIn$time), max(dataIn$time) - winSize, by = winSpace), 5)
-winStop <- round(winStart + winSize, 5)
-nWin <- length(winStart)
-FI <- c()
-VI <- c()
-
-EWS <- NULL
- ## Begin window for-loop to analyze FI, VI and EWSs
-for (i in 1:nWin) {
-
-  winData <- dataIn %>% filter(time >= winStart[i], time <
-                                 winStop[i]) %>%
-    distinct()
-  # Leave loop if not enough data points
-  if (length(unique(winData$time)) < min.window.dat | nrow(winData) <= min.window.dat) {
-    warning("Fewer than min.window.dat time points -- need more to calculate metrics. Skipping window.")
-    next
+){
+  if (winMove > 1 | winMove < 1e-10) {
+    stop("winMove must be a number between zero and one")
   }
-
-  # Calcuate the metrics if in argument to.calc
-  if ("FI" %in% to.calc) {
-    FI[i] <- calculate_FisherInformation(dataInFI = winData, fi.equation = fi.equation)
+  if (length(unique(dataIn$time)) < 5) {
+    next("Five or less time points in the data frame")
   }
-  if ("VI" %in% to.calc) {
-    VI[i] <- calculate_VI(winData,  fill)
-  }
-  if ("EWS" %in% to.calc) {
-    EWS <- calculate_EWS(winData) %>% rbind(EWS)
-  }
-}
-resultsOut = list()
-resultsOut$FI_VI <- as_tibble(winStart, winStop, FI, VI)
-resultsOut$ews <- EWS
-return(resultsOut)
-
+  time <- dataIn$time
+  timeSpan <- range(time)
+  TT <- timeSpan[2] - timeSpan[1]
+  winSize <- winMove * TT
+  message(paste0("FYI: Windows ~= ", winSize,
+                 " time units"))
+  winSpace <- max(lead(time) - time, na.rm = T)
+  message(paste0("FYI: Windows advance by ~",
+                 round(winSpace, digits = 5), " time units."))
+  winStart <- round(seq(min(dataIn$time), max(dataIn$time) - winSize, by = winSpace), 5)
+  winStop <- round(winStart + winSize, 5)
+  nWin <- length(winStart)
+  FI <- c()
+  VI <- c()
+  
+  EWS <- NULL
+  ## Begin window for-loop to analyze FI, VI and EWSs
+  for (i in 1:nWin) {
+    
+    winData <- dataIn %>% filter(time >= winStart[i], time <
+                                   winStop[i]) %>%
+      distinct()
+    # Leave loop if not enough data points
+    if (length(unique(winData$time)) < min.window.dat | nrow(winData) <= min.window.dat) {
+      warning("Fewer than min.window.dat time points -- need more to calculate metrics. Skipping window.")
+      next
     }
+    
+    # Calcuate the metrics if in argument to.calc
+    if ("FI" %in% to.calc) {
+      FI_temp = NULL
+      FI_temp <- calculate_FisherInformation(dataInFI = winData, fi.equation = fi.equation) %>%
+        as_tibble() %>% 
+        mutate(winStart = winStart[i], 
+               winStop = winStop[i], 
+               fi.equation, 
+               site = unique(winData$site))
+      
+      FI <- rbind(FI_temp, FI)
+      
+      }
+    if ("VI" %in% to.calc) {
+      VI_temp = NULL
+      VI_temp <- calculate_VI(winData,  fill = fill) %>% 
+        as_tibble() %>% 
+        mutate(winStart = winStart[i], 
+               winStop = winStop[i], 
+               site = unique(winData$site))
+      
+      VI <- rbind(VI_temp, VI)
+      
+    }
+    if ("EWS" %in% to.calc) {
+      EWS <- calculate_EWS(winData) %>% rbind(EWS)
+    }
+   
+    
+    
+    }
+  lresutsOut = list()
+  resultsOut$VI <- VI
+  resultsOut$FI <- FI
+  resultsOut$ews <- EWS
+  return(resultsOut)
+  
+}
