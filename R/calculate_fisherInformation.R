@@ -6,33 +6,24 @@
 #' @export
 #'
 calculate_FisherInformation <- function(dataInFI, min.window.dat =2,  fi.equation =  "7.12") {
-
-    FItemp = NULL
-
-    # Break the loop if fi.eq arg is bad
-    if(!("7.12"%in% fi.equation|
-         "7.3b" %in% fi.equation|
-         "7.3c" %in% fi.equation
-    )){warning("Unrecognized equation supplied (fi.equation must be one of c(7.3b, 7.3c, 7.12)")}
-
-  if( !("dsdt" %in% colnames(dataInFI))){
-      dataInFI <- calculate_distanceTravelled(dataInFI, derivs = T)
+    
+  if (!("7.12" %in% fi.equation | "7.3b" %in% fi.equation |
+        "7.3c" %in% fi.equation)) {
+    warning("Unrecognized equation supplied (fi.equation must be one of c(7.3b, 7.3c, 7.12)")
   }
-
+  
+  if (!("dsdt" %in% colnames(dataInFI))) {
+    dataInFI <- calculate_distanceTravelled(dataInFI, derivs = T)
+  }
+  
   require(kedd)
   require(caTools)
-
-    # Calculate distribution of distance travelled
-  dataInFI <-
-    dataInFI %>%
-    mutate(TT = max(time) - min(time),
-           p = (1 / TT) * (1 / dsdt)) %>%
-    na.omit(d2sdt2) %>%
-      filter(dsdt != 0)
-
-
+  
+  
+  dataInFI <- dataInFI %>% mutate(TT = max(time) - min(time),
+                                  p = (1 / TT) * (1 / dsdt)) %>%  filter(ds != 0)
+  
   if (fi.equation == "7.3b" & nrow(dataInFI) > min.window.dat) {
-    # Equation 7.3b
     p <- dataInFI$p
     s <- dataInFI$s
     dp <- lead(p) - p
@@ -40,11 +31,8 @@ calculate_FisherInformation <- function(dataInFI, min.window.dat =2,  fi.equatio
     dpds <- dp / ds
     ind <- 1:(length(s) - 1)
     FItemp <- trapz(s[ind], (1 / p[ind]) * dpds[ind] ^ 2)
-
   }
-
-  if (fi.equation == "7.3c"& nrow(dataInFI) > min.window.dat) {
-    # Equation 7.3c
+  if (fi.equation == "7.3c" & nrow(dataInFI) > min.window.dat) {
     q <- sqrt(dataInFI$p)
     s <- dataInFI$s
     dq <- lead(q) - q
@@ -52,11 +40,12 @@ calculate_FisherInformation <- function(dataInFI, min.window.dat =2,  fi.equatio
     dqds <- dq / ds
     ind <- 1:(length(s) - 1)
     FItemp <- 4 * trapz(s[ind], dqds[ind] ^ 2)
-
   }
-
-  if (fi.equation == "7.12"& nrow(dataInFI) > min.window.dat) {
-    # Equation 7.12
+  if (fi.equation == "7.12" & nrow(dataInFI) > min.window.dat) {
+   
+    # Because this equation divides by dsdt, dsdt != 0
+    dataInFI <- dataInFI %>% na.omit(dsdt)
+    
     t <- dataInFI$time
     s <- dataInFI$s
     TT <- max(t) - min(t)
@@ -65,8 +54,5 @@ calculate_FisherInformation <- function(dataInFI, min.window.dat =2,  fi.equatio
     ind <- 1:(length(s) - 1)
     FItemp <- (1 / TT) * trapz(t[ind], d2sdt2 ^ 2 / dsdt ^ 4)
   }
-
-
   return(FItemp)
-
-  }
+}
