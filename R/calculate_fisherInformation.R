@@ -7,6 +7,8 @@
 #'
 calculate_FisherInformation <- function(dataInFI, min.window.dat =2,  fi.equation =  "7.12") {
     
+  FItemp <- NULL  
+    
   if (!("7.12" %in% fi.equation | "7.3b" %in% fi.equation |
         "7.3c" %in% fi.equation)) {
     warning("Unrecognized equation supplied (fi.equation must be one of c(7.3b, 7.3c, 7.12)")
