@@ -7,7 +7,7 @@
 #' @param min.window.dat Used in calc_FisherInformation. Default = 2 data points
 #'@param to.calc Which measures to calculate. VI variance index. FI Fisher Information. EWS 1st through 4th moments, etc. Default = ALL measures.
 #' @export
-rdm_window_analysisT <- function(dataIn,
+rdm_window_analysis <- function(dataIn,
                                 winMove = 0.25,
                                 overrideSiteErr = F,
                                 min.window.dat = 2,
