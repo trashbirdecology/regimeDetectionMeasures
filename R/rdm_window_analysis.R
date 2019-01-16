@@ -94,7 +94,7 @@ rdm_window_analysis <- function(dataIn,
   }
   
   if(!is.null(EWS)){
-    resultsOut$EWSs <- EWS %>% tidyr::gather(key = 'metricType', value = value, -site, -variable, -winStart, -winStop )}
+    resultsOut$EWSs <- EWS %>% tidyr::gather(key = 'metricType', value = 'value', -site, -variable, -winStart, -winStop )}
   
   resultsOut <- do.call(rbind, lapply(resultsOut, data.frame, stringsAsFactors=FALSE)) %>% 
     dplyr::rename(metricValue = value)
