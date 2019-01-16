@@ -81,10 +81,12 @@ rdm_window_analysis <- function(dataIn,
     
     
     }
-  resutsOut = list()
+  resultsOut = list()
   resultsOut$VI <- VI %>% rename(metricValue = value)
   resultsOut$FI <- FI %>% rename(metricValue = value)
   resultsOut$ews <- EWS %>% tidyr::gather(key = 'metricType', value = 'metricValue', -site, -variable, -winStart, -winStop )
+
+  resultsOut <- do.call(rbind, lapply(resultsOut, data.frame, stringsAsFactors=FALSE)) 
   
   return(resultsOut)
 
