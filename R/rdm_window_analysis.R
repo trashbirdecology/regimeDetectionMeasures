@@ -21,7 +21,11 @@ rdm_window_analysis <- function(dataIn,
   if (length(unique(dataIn$time)) < 5) {
     next("Five or less time points in the data frame")
   }
-  time <- dataIn$time
+  
+  # Keep and sort unique time for partitioning windows
+  time <- dataIn %>% distinct(time) %>% as_vector()
+     time <- sort(time)
+  
   timeSpan <- range(time)
   TT <- timeSpan[2] - timeSpan[1]
   winSize <- winMove * TT
