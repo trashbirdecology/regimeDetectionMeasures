@@ -56,7 +56,7 @@ rdm_window_analysis <- function(dataIn,
         as_tibble() %>% 
         mutate(winStart = winStart[i], 
                winStop = winStop[i], 
-               fi.equation, 
+               metricType = paste0("fiEqn_", fi.equation), 
                site = unique(winData$site))
       
       FI <- rbind(FI_temp, FI)
@@ -68,7 +68,8 @@ rdm_window_analysis <- function(dataIn,
         as_tibble() %>% 
         mutate(winStart = winStart[i], 
                winStop = winStop[i], 
-               site = unique(winData$site))
+               site = unique(winData$site), 
+               metricType = "VI")
       
       VI <- rbind(VI_temp, VI)
       
@@ -80,10 +81,11 @@ rdm_window_analysis <- function(dataIn,
     
     
     }
-  lresutsOut = list()
-  resultsOut$VI <- VI
-  resultsOut$FI <- FI
-  resultsOut$ews <- EWS
-  return(resultsOut)
+  resutsOut = list()
+  resultsOut$VI <- VI %>% rename(metricValue = value)
+  resultsOut$FI <- FI %>% rename(metricValue = value)
+  resultsOut$ews <- EWS %>% tidyr::gather(key = 'metricType', value = 'metricValue', -site, -variable, -winStart, -winStop )
   
+  return(resultsOut)
+
 }
