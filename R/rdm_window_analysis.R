@@ -7,7 +7,7 @@
 #' @param min.window.dat Used in calc_FisherInformation. Default = 2 data points
 #'@param to.calc Which measures to calculate. VI variance index. FI Fisher Information. EWS 1st through 4th moments, etc. Default = ALL measures.
 #' @export
-rdm_window_analysis <- function(dataIn,
+rdm_window_analysisT <- function(dataIn,
                                 winMove = 0.25,
                                 overrideSiteErr = F,
                                 min.window.dat = 2,
@@ -35,8 +35,9 @@ rdm_window_analysis <- function(dataIn,
   nWin <- length(winStart)
   FI <- c()
   VI <- c()
-  
   EWS <- NULL
+  
+  
   ## Begin window for-loop to analyze FI, VI and EWSs
   for (i in 1:nWin) {
     
@@ -48,7 +49,6 @@ rdm_window_analysis <- function(dataIn,
       warning("Fewer than min.window.dat time points -- need more to calculate metrics. Skipping window.")
       next
     }
-    
     # Calcuate the metrics if in argument to.calc
     if ("FI" %in% to.calc) {
       FI_temp = NULL
@@ -78,19 +78,27 @@ rdm_window_analysis <- function(dataIn,
       EWS <- calculate_EWS(winData) %>% rbind(EWS)
     }
    
-    
-    
-    }
-   
+  }  # End nWin loops
+  
+
+# Create new df -----------------------------------------------------------
+
+  
   resultsOut = list()
-  resultsOut$VI <- VI %>%  mutate(variable = NA)
-  resultsOut$FI <- FI %>%  mutate(variable = NA)
-  resultsOut$ews <- EWS %>% tidyr::gather(key = 'metricType', value = value, -site, -variable, -winStart, -winStop )
+  if(!is.null(VI)){
+  resultsOut$VI <- VI %>%  mutate(variable = 'NA')
+  }
+  
+  if(!is.null(FI)){
+    resultsOut$FI <- FI %>%  mutate(variable = 'NA')
+  }
+  
+  if(!is.null(EWS)){
+    resultsOut$EWSs <- EWS %>% tidyr::gather(key = 'metricType', value = value, -site, -variable, -winStart, -winStop )}
   
   resultsOut <- do.call(rbind, lapply(resultsOut, data.frame, stringsAsFactors=FALSE)) %>% 
     dplyr::rename(metricValue = value)
   
   return(resultsOut)
-
 
 }
