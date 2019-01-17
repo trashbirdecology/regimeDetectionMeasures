@@ -15,11 +15,7 @@ calculate_VI <- function(winData, fill = 0) {
   fill = 0
 }
   
-  # Add filter for working with BBS data. 
-  if("RTENO" %in% colnames(winData)){
-  winData <- winData %>% dplyr::select(-RTENO)
-  }
-  
+
   
   
 # Create the time series to analyse
