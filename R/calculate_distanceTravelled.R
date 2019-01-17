@@ -9,24 +9,24 @@
 calculate_distanceTravelled <- function(dataIn, derivs = T, print = T) {
 
     
-    # Calculate distance traveled with special option for using BBS data identifier,
-{
-  if ('RTENO' %in% colnames(dataIn)) {
-    distances <- dataIn %>% group_by(variable) %>% arrange(variable,
-                                                           time) %>% mutate(dx = value - lag(value)) %>% na.omit(dx) %>%
-      ungroup() %>% group_by(time, RTENO) %>% summarise(ds = sqrt(sum(dx ^ 2))) %>%
-      ungroup() %>%
-      mutate(s = cumsum(ds))
-  }
-  if (!('RTENO' %in% colnames(dataIn))) {
-    distances <- dataIn %>% group_by(variable) %>% arrange(variable,
-                                                           time) %>% mutate(dx = value - lag(value)) %>% na.omit(dx) %>%
-      ungroup() %>% group_by(time, RTENO) %>% summarise(ds = sqrt(sum(dx ^
-                                                                        2))) %>%
-      ungroup() %>%
-      mutate(s = cumsum(ds))
-  }
-}
+#    # Calculate distance traveled with special option for using BBS data identifier,
+# {
+#  if ('RTENO' %in% colnames(dataIn)) {
+#    distances <- dataIn %>% group_by(variable) %>% arrange(variable,
+#                                                           time) %>% mutate(dx = value - lag(value)) %>% na.omit(dx) %>%
+#      ungroup() %>% group_by(time, RTENO) %>% summarise(ds = sqrt(sum(dx ^ 2))) %>%
+#      ungroup() %>%
+#      mutate(s = cumsum(ds))
+#  }
+#  if (!('RTENO' %in% colnames(dataIn))) {
+#    distances <- dataIn %>% group_by(variable) %>% arrange(variable,
+#                                                           time) %>% mutate(dx = value - lag(value)) %>% na.omit(dx) %>%
+#      ungroup() %>% group_by(time, RTENO) %>% summarise(ds = sqrt(sum(dx ^
+#                                                                        2))) %>%
+#      ungroup() %>%
+#      mutate(s = cumsum(ds))
+# }
+# }
 
 # Add the derivatives if desired
 if (derivs == T) {
