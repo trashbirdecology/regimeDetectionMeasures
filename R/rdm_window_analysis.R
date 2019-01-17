@@ -107,7 +107,7 @@ if (!is.null(EWS) & ("RTENO" %in% colnames(EWS))) {
                                            value = "value", -site, -variable, -winStart, -winStop, -RTENO) %>% 
     dplyr::select(-RTENO, everything())
 }
-  resultsOut <- do.call(rbind, lapply(resultsOut, data.frame, stringsAsFactors=FALSE)) %>% 
+  resultsOut <- do.call(rbind.fill, lapply(resultsOut, data.frame, stringsAsFactors=FALSE)) %>% 
     dplyr::rename(metricValue = value)
   
   return(resultsOut)
