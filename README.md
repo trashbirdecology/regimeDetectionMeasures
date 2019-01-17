@@ -1,5 +1,10 @@
-## Measures calculated
-This package calculates univariable and composite 'regime shift detection' measures:
+## About  
+This package can be calculates a handful of measures used to 'detect ecological regime shifts'. 
+
+## Example
+Run example.R to view an example run of all functions in the package.
+
+## Measures/metrics calculated  
 
 COMPOSITE:
 1. Distance travelled
@@ -15,6 +20,3 @@ UNIVARIABLE:
 1. Coefficient of variation, CV
 1. Autocorrelation lag-1 (using `stats::acf`)
 
-
-## Example
-Run example.R to view an example run of all functions in the package.
