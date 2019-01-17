@@ -43,7 +43,8 @@ calculate_FisherInformation <- function(dataInFI, min.window.dat =2,  fi.equatio
     ind <- 1:(length(s) - 1)
     FItemp <- 4 * trapz(s[ind], dqds[ind] ^ 2)
   }
-  if (fi.equation == "7.12" & nrow(dataInFI) > min.window.dat) {
+   if (fi.equation == "7.12" & nrow(dataInFI %>% na.omit(dsdt)) > min.window.dat) {
+ 
    
     # Because this equation divides by dsdt, dsdt != 0
     dataInFI <- dataInFI %>% na.omit(dsdt)
