@@ -1,8 +1,10 @@
 #' @title Calculate the early warning signals
+#' @description Outputs data frame `ews`. Metric values will be replicated
 #' @param winMove Proportion of data to be included in each moving window (0,1).
 #' @param distances A data frame of the distances and dervatives of distance travelled at each time point.
 #' @param winData Used in calc_FisherInformation. Default = 2 data points
-#' @export
+#' @export calculate_EWS
+#'
 calculate_EWS <- function(winData, winMove){
 
     # Create function for getting mode of data
@@ -16,16 +18,16 @@ calculate_EWS <- function(winData, winMove){
     require(PerformanceAnalytics)
 
 
-    # # List of variables with at least one observation.
-    # spp <- winData %>%
-    #     dplyr::group_by(variable) %>%
-    #     summarise(sum=sum(value)) %>%
-    #     filter(sum > 0) %>%
-    #     dplyr::select(variable)
-    #
+    # List of variables with at least one observation.
+    spp <- winData %>%
+        dplyr::group_by(variable) %>%
+        dplyr::summarise(sum=sum(value)) %>%
+        filter(sum > 0) %>%
+        dplyr::select(variable)
+
 
     ews <- winData %>%
-        # filter(variable %in% spp$variable) %>%
+        filter(variable %in% spp$variable) %>%
         group_by(variable) %>%
         arrange(variable, time) %>%
         mutate(
@@ -41,7 +43,7 @@ calculate_EWS <- function(winData, winMove){
             skewMean = (median(value)*3)/sd(value)
         ) %>%
         ungroup() %>%
-        select(-time, -value) %>%
+        dplyr::select(-time, -value) %>%
         distinct() %>%
         na.omit(mean) %>%
         mutate(winStart = min(winData$time)) %>%
