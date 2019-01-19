@@ -21,11 +21,10 @@ rdm_window_analysis <- function(dataIn,
   if (length(unique(dataIn$time)) < 5) {
     next("Five or less time points in the data frame")
   }
-  
+
   # Keep and sort unique time for partitioning windows
-  time <- dataIn %>% distinct(time) %>% as_vector()
-     time <- sort(time)
-  
+   time <- dataInRDM %>% distinct(time) %>% arrange(time)
+
   timeSpan <- range(time)
   TT <- timeSpan[2] - timeSpan[1]
   winSize <- winMove * TT
@@ -40,11 +39,11 @@ rdm_window_analysis <- function(dataIn,
   FI <- c()
   VI <- c()
   EWS <- NULL
-  
-  
+
+
   ## Begin window for-loop to analyze FI, VI and EWSs
   for (i in 1:nWin) {
-    
+
     winData <- dataIn %>% filter(time >= winStart[i], time <
                                    winStop[i]) %>%
       distinct()
@@ -57,55 +56,55 @@ rdm_window_analysis <- function(dataIn,
     if ("FI" %in% to.calc) {
       FI_temp = NULL
       FI_temp <- calculate_FisherInformation(dataInFI = winData, fi.equation = fi.equation) %>%
-        as_tibble() %>% 
-        mutate(winStart = winStart[i], 
-               winStop = winStop[i], 
-               metricType = paste0("fiEqn_", fi.equation), 
+        as_tibble() %>%
+        mutate(winStart = winStart[i],
+               winStop = winStop[i],
+               metricType = paste0("fiEqn_", fi.equation),
                site = unique(winData$site))
-      
+
       FI <- rbind(FI_temp, FI)
-      
+
       }
     if ("VI" %in% to.calc) {
       VI_temp = NULL
-      VI_temp <- calculate_VI(winData,  fill = fill) %>% 
-        as_tibble() %>% 
-        mutate(winStart = winStart[i], 
-               winStop = winStop[i], 
-               site = unique(winData$site), 
+      VI_temp <- calculate_VI(winData,  fill = fill) %>%
+        as_tibble() %>%
+        mutate(winStart = winStart[i],
+               winStop = winStop[i],
+               site = unique(winData$site),
                metricType = "VI")
-      
+
       VI <- rbind(VI_temp, VI)
-      
+
     }
     if ("EWS" %in% to.calc) {
       EWS <- calculate_EWS(winData) %>% rbind(EWS)
     }
-   
+
   }  # End nWin loops
-  
+
 
 # Create new df -----------------------------------------------------------
 
-  
+
   resultsOut = list()
   if(!is.null(VI)){
   resultsOut$VI <- VI %>%  mutate(variable = 'NA')
   }
-  
+
   if(!is.null(FI)){
     resultsOut$FI <- FI %>%  mutate(variable = 'NA')
   }
-  
+
 if (!is.null(EWS)) {
-    resultsOut$EWSs <- EWS %>% tidyr::gather(key = "metricType", 
+    resultsOut$EWSs <- EWS %>% tidyr::gather(key = "metricType",
                                            value = "value", -site, -variable, -winStart, -winStop)
 }
 
 
-  resultsOut <- do.call(plyr::rbind.fill, lapply(resultsOut, data.frame, stringsAsFactors=FALSE)) %>% 
+  resultsOut <- do.call(plyr::rbind.fill, lapply(resultsOut, data.frame, stringsAsFactors=FALSE)) %>%
     dplyr::rename(metricValue = value)
-  
+
   return(resultsOut)
 
 }
