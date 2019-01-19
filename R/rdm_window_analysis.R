@@ -100,7 +100,7 @@ rdm_window_analysis <- function(dataIn,
 
 if (!is.null(EWS)) {
     resultsOut$EWSs <- EWS %>% tidyr::gather(key = "metricType",
-                                           value = "value", -site, -variable, -winStart, -winStop)
+                                           value = "value",  -variable, -winStart, -winStop)
 }
 
 
