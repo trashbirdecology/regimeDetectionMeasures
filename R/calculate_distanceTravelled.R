@@ -6,28 +6,32 @@
 #'
 #' @export
 #'
-calculate_distanceTravelled <- function(dataIn, derivs = T, print = T) {
-
+calculate_distanceTravelled <- function(dataIn, derivs = T, print = T) {  
     
-    # Calculate distance traveled with special option for using BBS data identifier,
-        distances <- dataIn %>% group_by(variable) %>% arrange(variable,
-                                                               time) %>% mutate(dx = value - lag(value)) %>% na.omit(dx) %>%
-          ungroup() %>% group_by(time) %>% summarise(ds = sqrt(sum(dx ^
-                                                                            2))) %>%
-          ungroup() %>%
-          mutate(s = cumsum(ds))
+    
+    distances <- dataIn %>% group_by(variable) %>% arrange(variable,
+                                                       time) %>% mutate(dx = value - lag(value)) %>% na.omit(dx) %>%
+    ungroup() %>% 
+    group_by(time) %>% 
+    mutate(ds = sqrt(sum(dx ^ 2))) %>%
+    ungroup() %>% 
+    distinct(time, dx, ds) %>% 
+    mutate(s = cumsum(ds)) %>% 
+        ungroup()
 
 
-    # Add the derivatives if desired
-    if (derivs == T) {
-      distances <- distances %>% mutate(dsdt = ((s - lag(s)) / (time -
-                                                                  lag(time))),
-                                        d2sdt2 = ((dsdt - lag(dsdt)) / (time -
-                                                                          lag(time)))) %>% ungroup()
-    }
-    if (print == T) {
-      head(distances)
-    }
-    return(distances)
-    }
 
+if (derivs == T) {
+    distances <- distances %>% mutate(dsdt = ((s - lag(s)) / (time -
+                                                                  lag(time))), d2sdt2 = ((dsdt - lag(dsdt)) /
+                                                                                             (time - lag(time)))) %>% ungroup()
+}
+if (print == T) {
+    head(distances)
+}
+
+distances<-as.data.frame(distances) # being buggy with group by and gather. keep for now. 
+    
+return(distances)
+    
+    }
