@@ -24,6 +24,10 @@ rdm_window_analysis <- function(dataIn,
 
   # Keep and sort unique time for partitioning windows
    time <- dataInRDM %>% distinct(time) %>% arrange(time)
+   if(!is.vector(time)){
+       time = time$time
+   }
+
 
   timeSpan <- range(time)
   TT <- timeSpan[2] - timeSpan[1]
