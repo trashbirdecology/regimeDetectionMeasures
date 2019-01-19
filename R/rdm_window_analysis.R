@@ -18,7 +18,7 @@ rdm_window_analysis <- function(dataIn,
   if (winMove > 1 | winMove < 1e-10) {
     stop("winMove must be a number between zero and one")
   }
-  if (length(unique(dataIn$time)) < 5) {
+  if (length(unique(dataInRDM$time)) < 5) {
     next("Five or less time points in the data frame")
   }
 
@@ -48,7 +48,7 @@ rdm_window_analysis <- function(dataIn,
   ## Begin window for-loop to analyze FI, VI and EWSs
   for (i in 1:nWin) {
 
-    winData <- dataIn %>% filter(time >= winStart[i], time <
+    winData <- dataInRDM %>% filter(time >= winStart[i], time <
                                    winStop[i]) %>%
       distinct()
     # Leave loop if not enough data points
@@ -63,8 +63,7 @@ rdm_window_analysis <- function(dataIn,
         as_tibble() %>%
         mutate(winStart = winStart[i],
                winStop = winStop[i],
-               metricType = paste0("fiEqn_", fi.equation),
-               site = unique(winData$site))
+               metricType = paste0("fiEqn_", fi.equation))
 
       FI <- rbind(FI_temp, FI)
 
@@ -75,7 +74,6 @@ rdm_window_analysis <- function(dataIn,
         as_tibble() %>%
         mutate(winStart = winStart[i],
                winStop = winStop[i],
-               site = unique(winData$site),
                metricType = "VI")
 
       VI <- rbind(VI_temp, VI)

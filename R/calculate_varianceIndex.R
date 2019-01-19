@@ -14,23 +14,18 @@ calculate_VI <- function(winData, fill = 0) {
   if(!exists("fill")){
   fill = 0
 }
-  
 
-  
-  
-# Create the time series to analyse
+
+ # Create the time series to analyse
    ts <-
     winData %>%
     distinct() %>%
     group_by(variable) %>%
     mutate(sumValue = sum(value)) %>%
     filter(sumValue > 0) %>%
-    select(-sumValue) %>%
-    group_by(variable, time) %>%
-    summarise(value = max(value)) %>%
-    ungroup() %>%
+    dplyr::select(-sumValue) %>%
     spread(variable, value, fill = fill) %>%
-    select(-time) %>%
+    dplyr::select(-time) %>%
     as.matrix()
 
 
