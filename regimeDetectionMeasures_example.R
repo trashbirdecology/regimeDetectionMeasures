@@ -2,6 +2,7 @@
 # Munge original data -----------------------------------------------------
 
 origData = munge_orig_dat(example = T)
+head(origData)
 
 # Visualize original data -------------------------------------------------
 
