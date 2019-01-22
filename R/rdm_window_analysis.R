@@ -63,7 +63,7 @@ rdm_window_analysis <- function(dataIn,
         as_tibble() %>%
         mutate(winStart = winStart[i],
                winStop = winStop[i],
-               metricType = paste0("fiEqn_", fi.equation))
+               metricType = paste0("FI_Eqn", fi.equation))
 
       FI <- rbind(FI_temp, FI)
 
