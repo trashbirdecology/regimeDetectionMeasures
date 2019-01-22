@@ -1,4 +1,4 @@
-#' @title Plot original data
+#' @title Calculate the regime detection measured within a moving window.
 #' @param dataIn A data frame in long format. See description **NEED TO UPDATE THIS!**
 #' @param winMove Number as proportion of each time series to be included in the moving windows. Default = 0.25 (25% of data included in each window).
 #' @param min.windowdat Minimum # of data points in each window to include in calculations. Default = 2.
