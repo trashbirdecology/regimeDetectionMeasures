@@ -54,9 +54,11 @@ rdm_window_analysis <- function(dataIn,
     # Leave loop if not enough data points
     if (length(unique(winData$time)) < min.window.dat | nrow(winData) <= min.window.dat) {
       warning("Fewer than min.window.dat time points -- need more to calculate metrics. Skipping window.")
-      next
-    }
+     
+    } 
     # Calcuate the metrics if in argument to.calc
+   if (!(length(unique(winData$time)) < min.window.dat | nrow(winData) <= min.window.dat)) {
+        
     if ("FI" %in% to.calc) {
       FI_temp = NULL
       FI_temp <- calculate_FisherInformation(dataInFI = winData, fi.equation = fi.equation) %>%
@@ -67,7 +69,7 @@ rdm_window_analysis <- function(dataIn,
 
       FI <- rbind(FI_temp, FI)
 
-      }
+      } # close FI if
     if ("VI" %in% to.calc) {
       VI_temp = NULL
       VI_temp <- calculate_VI(winData,  fill = fill) %>%
@@ -78,12 +80,13 @@ rdm_window_analysis <- function(dataIn,
 
       VI <- rbind(VI_temp, VI)
 
-    }
+    } # close VI if
     if ("EWS" %in% to.calc) {
       EWS <- calculate_EWS(winData) %>% rbind(EWS)
-    }
+    } # end EWS if
+     } # end min.samp.size if
 
-  }  # End nWin loops
+  }  # close nWin looping
 
 
 # Create new df -----------------------------------------------------------
