@@ -1,5 +1,5 @@
 #' @title Calculate the regime detection measured within a moving window.
-#' @param dataIn A data frame in long format. See description **NEED TO UPDATE THIS!**
+#' @param dataInRDM A data frame in long format. See description **NEED TO UPDATE THIS!**
 #' @param winMove Number as proportion of each time series to be included in the moving windows. Default = 0.25 (25% of data included in each window).
 #' @param min.windowdat Minimum # of data points in each window to include in calculations. Default = 2.
 #' @param overrideSiteErr
@@ -7,7 +7,7 @@
 #' @param min.window.dat Used in calc_FisherInformation. Default = 2 data points
 #'@param to.calc Which measures to calculate. VI variance index. FI Fisher Information. EWS 1st through 4th moments, etc. Default = ALL measures.
 #' @export
-rdm_window_analysis <- function(dataIn,
+rdm_window_analysis <- function(dataInRDM,
                                 winMove = 0.25,
                                 overrideSiteErr = F,
                                 min.window.dat = 2,
@@ -37,7 +37,7 @@ rdm_window_analysis <- function(dataIn,
   winSpace <- max(lead(time) - time, na.rm = T)
   message(paste0("FYI: Windows advance by ~",
                  round(winSpace, digits = 5), " time units."))
-  winStart <- round(seq(min(dataIn$time), max(dataIn$time) - winSize, by = winSpace), 5)
+  winStart <- round(seq(min(dataInRDM$time), max(dataInRDM$time) - winSize, by = winSpace), 5)
   winStop <- round(winStart + winSize, 5)
   nWin <- length(winStart)
   FI <- c()
