@@ -18,9 +18,6 @@ rdm_window_analysis <- function(dataInRDM,
   if (winMove > 1 | winMove < 1e-10) {
     stop("winMove must be a number between zero and one")
   }
-  if (length(unique(dataInRDM$time)) < 5) {
-    next("Five or less time points in the data frame")
-  }
 
   # Keep and sort unique time for partitioning windows
    time <- dataInRDM %>% distinct(time) %>% arrange(time)
@@ -52,6 +49,7 @@ rdm_window_analysis <- function(dataInRDM,
                                    winStop[i]) %>%
       distinct()
     # Leave loop if not enough data points
+    my.cond <- (length(unique(winData$time)) < min.window.dat | nrow(winData) <= min.window.dat)
     if (length(unique(winData$time)) < min.window.dat | nrow(winData) <= min.window.dat) {
       warning("Fewer than min.window.dat time points -- need more to calculate metrics. Skipping window.")
       next
