@@ -25,7 +25,7 @@ rdm_window_analysis <- function(dataInRDM,
        time = time$time
    }
 
-
+  # Define parameters for pulling data for moving windows
   timeSpan <- range(time)
   TT <- timeSpan[2] - timeSpan[1]
   winSize <- winMove * TT
@@ -37,12 +37,12 @@ rdm_window_analysis <- function(dataInRDM,
   winStart <- round(seq(min(dataInRDM$time), max(dataInRDM$time) - winSize, by = winSpace), 5)
   winStop <- round(winStart + winSize, 5)
   nWin <- length(winStart)
-  FI <- c()
-  VI <- c()
+  FI <- NULL
+  VI <- NULL
   EWS <- NULL
 
 
-  ## Begin window for-loop to analyze FI, VI and EWSs
+# Begin window for-loop to analyze FI, VI and EWSs
   for (i in 1:nWin) {
 
     winData <- dataInRDM %>% filter(time >= winStart[i], time <
@@ -51,7 +51,7 @@ rdm_window_analysis <- function(dataInRDM,
     # Leave loop if not enough data points
     my.cond <- (length(unique(winData$time)) < min.window.dat | nrow(winData) <= min.window.dat)
     if (length(unique(winData$time)) < min.window.dat | nrow(winData) <= min.window.dat) {
-      warning("Fewer than min.window.dat time points -- need more to calculate metrics. Skipping window.")
+      warning("# time points < min.window.dat time points -- need more to calculate metrics. Skipping current window.")
       next
     }
     # Calcuate the metrics if in argument to.calc
@@ -86,8 +86,9 @@ rdm_window_analysis <- function(dataInRDM,
 
 # Create new df -----------------------------------------------------------
 
-
+# Create an empty list for storing results
   resultsOut = list()
+
   if(!is.null(VI)){
   resultsOut$VI <- VI %>%  mutate(variable = 'NA')
   }
@@ -100,6 +101,10 @@ if (!is.null(EWS)) {
     resultsOut$EWSs <- EWS %>% tidyr::gather(key = "metricType",
                                            value = "value",  -variable, -winStart, -winStop)
 }
+
+ if( is.null(EWS) & is.null(VI) & is.null(FI) ){
+     return(resultsOut = NULL)
+ }
 
 
   resultsOut <- do.call(plyr::rbind.fill, lapply(resultsOut, data.frame, stringsAsFactors=FALSE)) %>%
