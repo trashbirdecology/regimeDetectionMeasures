@@ -26,7 +26,7 @@ calculate_EWS <- function(winData, winMove) {
     ews <- winData %>%
         filter(variable %in% spp$variable) %>%
         group_by(variable) %>%
-        arrange(variable, sortVar) %>%
+        arrange(sortVar) %>%
         mutate(
             mean = mean(value),
             mode = getmode(value),
@@ -44,8 +44,10 @@ calculate_EWS <- function(winData, winMove) {
         distinct() %>%
         na.omit(mean) %>%
         mutate(winStart = min(winData$sortVar)) %>%
-        mutate(winStop = max(winData$sortVar)) %>% tidyr::gather(key = "metricType",
-                                                                 value = "metricValue",-variable,-winStart,-winStop,-cellID) %>%
+        mutate(winStop = max(winData$sortVar)) %>%
+        tidyr::gather(key = "metricType",
+                      value = "metricValue",
+                      -variable,-winStart,-winStop,-cellID) %>%
         mutate(cellID_min = min(winData$cellID)) %>%
         mutate(cellID_max = max(winData$cellID))
 
