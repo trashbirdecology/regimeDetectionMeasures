@@ -13,24 +13,24 @@ calculate_distanceTravelled <-
              derivs = T,
              print = T) {
 
-        distances <- dataInDist %>% group_by(variable) %>% arrange(variable,
-                                                                   time) %>% mutate(dx = value - lag(value)) %>% na.omit(dx) %>%
+        distances <- dataInDist %>% group_by(variable) %>%
+            arrange(variable, sortVar) %>%
+            mutate(dx = value - lag(value)) %>%
+            na.omit(dx) %>%
             ungroup() %>%
-            group_by(time) %>%
+            group_by(sortVar) %>%
             mutate(ds = sqrt(sum(dx ^ 2))) %>%
             ungroup() %>%
-            distinct(time,  ds,.keep_all=T) %>%
-            dplyr::select(cellID, time, ds) %>%
-            arrange(time) %>%
+            distinct(sortVar,  ds, .keep_all = T) %>%
+            dplyr::select(cellID, sortVar, ds) %>%
+            arrange(sortVar) %>%
             mutate(s = cumsum(ds)) %>%
             ungroup()
 
-
-
         if (derivs == T) {
-            distances <- distances %>% mutate(dsdt = ((s - lag(s)) / (time -
-                                                                          lag(time))), d2sdt2 = ((dsdt - lag(dsdt)) /
-                                                                                                     (time - lag(time)))) %>% ungroup()
+            distances <- distances %>% mutate(dsdt = ((s - lag(s)) / (sortVar -
+                                                                          lag(sortVar))), d2sdt2 = ((dsdt - lag(dsdt)) /
+                                                                                                        (sortVar - lag(sortVar)))) %>% ungroup()
         }
         if (print == T) {
             head(distances)

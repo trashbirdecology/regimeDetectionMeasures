@@ -18,18 +18,19 @@ rdm_window_analysis <- function(dataInRDM,
     if (winMove > 1 | winMove < 1e-10) {
         stop("winMove must be a number between zero and one")
     }
-    time <- dataInRDM %>% distinct(time) %>% arrange(time)
-    if (!is.vector(time)) {
-        time = time$time
+    sortVar <- dataInRDM %>% distinct(sortVar) %>% arrange(sortVar)
+
+    if (!is.vector(sortVar)) {
+        sortVar = sortVar$sortVar
     }
-    timeSpan <- range(time)
+
+    timeSpan <- range(sortVar)
     TT <- timeSpan[2] - timeSpan[1]
     winSize <- winMove * TT
-    message(paste0("FYI: Windows ~= ", winSize, " time units"))
-    winSpace <- max(lead(time) - time, na.rm = T)
-    message(paste0("FYI: Windows advance by ~", round(winSpace,
-                                                      digits = 5), " time units."))
-    winStart <- round(seq(min(dataInRDM$time), max(dataInRDM$time) -
+    # message(paste0("FYI: Windows ~= ", winSize, " time units"))
+    winSpace <- max(lead(sortVar) - sortVar, na.rm = T)
+    # message(paste0("FYI: Windows advance by ~", round(winSpace,
+    winStart <- round(seq(min(dataInRDM$sortVar), max(dataInRDM$sortVar) -
                               winSize, by = winSpace), 5)
     winStop <- round(winStart + winSize, 5)
     nWin <- length(winStart)
@@ -39,11 +40,10 @@ rdm_window_analysis <- function(dataInRDM,
 
     # Loop
     for (i in 1:nWin) {
-        winData <- dataInRDM %>% filter(time >= winStart[i],
-                                        time < winStop[i]) %>% distinct()
-        my.cond <- (length(unique(winData$time)) < min.window.dat |
-                        nrow(winData) <= min.window.dat)
-        if (length(unique(winData$time)) < min.window.dat | nrow(winData) <=
+        winData <- dataInRDM %>% filter(sortVar >= winStart[i],
+                                        sortVar < winStop[i]) %>% distinct()
+
+        if (length(unique(winData$sortVar)) < min.window.dat | nrow(winData) <=
             min.window.dat) {
             warning("# time points < min.window.dat time points -- need more to calculate metrics. Skipping current window.")
             next
@@ -72,6 +72,8 @@ rdm_window_analysis <- function(dataInRDM,
             EWS <- calculate_EWS(winData) %>% rbind(EWS)
         }
     }
+
+    # Append all results to a list
     resultsOut = list()
     if (!is.null(VI)) {
         resultsOut$VI <- VI %>% mutate(variable = "NA")

@@ -25,7 +25,7 @@ calculate_VI <- function(winData, fill = 0) {
     filter(sumValue > 0) %>%
     dplyr::select(-sumValue) %>%
     spread(variable, value, fill = fill) %>%
-    dplyr::select(-time, -cellID) %>%
+    dplyr::select(-sortVar, -cellID) %>%
     as.matrix()
 
 

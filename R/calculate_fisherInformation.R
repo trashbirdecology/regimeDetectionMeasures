@@ -12,7 +12,7 @@ calculate_FisherInformation <-
         FItemp <- NULL
         if (!("7.12" %in% fi.equation | "7.3b" %in% fi.equation |
               "7.3c" %in% fi.equation)) {
-            warning("Unrecognized equation supplied (fi.equation must be one of c(7.3b, 7.3c, 7.12)")
+            stop("Unrecognized equation supplied (fi.equation must be one of c(7.3b, 7.3c, 7.12)")
         }
         if (!("dsdt" %in% colnames(dataInFI))) {
             dataInFI <- calculate_distanceTravelled(dataInFI, derivs = T)
@@ -20,7 +20,7 @@ calculate_FisherInformation <-
         require(kedd)
         require(caTools)
 
-        dataInFI <- dataInFI %>% mutate(TT = max(time) - min(time),
+        dataInFI <- dataInFI %>% mutate(TT = max(sortVar) - min(sortVar),
                                         p = (1 / TT) * (1 / dsdt)) %>% filter(ds != 0)
 
 
@@ -46,7 +46,7 @@ calculate_FisherInformation <-
         if (fi.equation == "7.12" & nrow(dataInFI %>% na.omit(dsdt)) >
             min.window.dat) {
             dataInFI <- dataInFI %>% na.omit(dsdt)
-            t <- dataInFI$time
+            t <- dataInFI$sortVar
             s <- dataInFI$s
             TT <- max(t) - min(t)
             dsdt <- dataInFI$dsdt

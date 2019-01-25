@@ -5,8 +5,7 @@
 #' @param winData Used in calc_FisherInformation. Default = 2 data points
 #' @export calculate_EWS
 #'
-calculate_EWS <- function(winData, winMove){
-
+calculate_EWS <- function(winData, winMove) {
     # Create function for getting mode of data
     getmode <- function(v) {
         uniqv <- unique(v)
@@ -19,7 +18,7 @@ calculate_EWS <- function(winData, winMove){
     # List of variables with at least one observation.
     spp <- winData %>%
         dplyr::group_by(variable) %>%
-        dplyr::summarise(sum=sum(value)) %>%
+        dplyr::summarise(sum = sum(value)) %>%
         filter(sum > 0) %>%
         dplyr::select(variable)
 
@@ -27,34 +26,30 @@ calculate_EWS <- function(winData, winMove){
     ews <- winData %>%
         filter(variable %in% spp$variable) %>%
         group_by(variable) %>%
-        arrange(variable, time) %>%
+        arrange(variable, sortVar) %>%
         mutate(
             mean = mean(value),
             mode = getmode(value),
             sd = sd(value),
-            CV = sd(value)/mean(value),
+            CV = sd(value) / mean(value),
             # kurtosis using the "PerformanceAnalytics" function
             kurtosis =  kurtosis(value, method = "fisher"),
             # skewness using two methods
-            skewMode = (mean(value)-getmode(value))/sd(value),
+            skewMode = (mean(value) - getmode(value)) / sd(value),
             # autocorr1 = acf(value, lag = 1)[1]$acf %>% as.numeric(),
-            skewMean = (median(value)*3)/sd(value)
+            skewMean = (median(value) * 3) / sd(value)
         ) %>%
         ungroup() %>%
-        dplyr::select(-time, -value) %>%
+        dplyr::select(-sortVar,-value) %>%
         distinct() %>%
         na.omit(mean) %>%
-        mutate(winStart = min(winData$time)) %>%
-        mutate(winStop = max(winData$time)) %>% tidyr::gather(key = "metricType",
-                      value = "metricValue",
-                      -variable,
-                      -winStart,
-                      -winStop,
-                      -cellID) %>%
+        mutate(winStart = min(winData$sortVar)) %>%
+        mutate(winStop = max(winData$sortVar)) %>% tidyr::gather(key = "metricType",
+                                                                 value = "metricValue",-variable,-winStart,-winStop,-cellID) %>%
         mutate(cellID_min = min(winData$cellID)) %>%
-    mutate(cellID_max = max(winData$cellID))
+        mutate(cellID_max = max(winData$cellID))
 
 
-        return(ews)
+    return(ews)
 
 }
