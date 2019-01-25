@@ -24,6 +24,7 @@ calculate_FisherInformation <-
                                         p = (1 / TT) * (1 / dsdt)) %>% filter(ds != 0)
 
 
+
         if (fi.equation == "7.3b" & nrow(dataInFI) > min.window.dat) {
             p <- dataInFI$p
             s <- dataInFI$s
@@ -54,11 +55,25 @@ calculate_FisherInformation <-
             FItemp <- (1 / TT) * trapz(t[ind], d2sdt2 ^ 2 / dsdt ^ 4)
         }
 
-        if (is.na(FItemp) | is.null(FItemp)) {
-            FItemp        = NULL
+        if(!exists('FItemp')){
+            FItemp = NULL
             return(FItemp)
         }
-        FItemp <-
+
+
+                if ( is.null(FItemp)   ) {
+            FItemp = NULL
+            return(FItemp)
+        }
+
+
+        if ( is.na(FItemp) ) {
+            FItemp = NULL
+            return(FItemp)
+        }
+
+
+                FItemp <-
             cbind(FItemp, min(dataInFI$cellID) , min(dataInFI$cellID))
         names(FItemp) <- c('FIvalue', 'cellID_min', 'cellID_max')
         return(FItemp)
