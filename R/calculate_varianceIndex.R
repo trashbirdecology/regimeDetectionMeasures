@@ -25,12 +25,17 @@ calculate_VI <- function(winData, fill = 0) {
     filter(sumValue > 0) %>%
     dplyr::select(-sumValue) %>%
     spread(variable, value, fill = fill) %>%
-    dplyr::select(-time) %>%
+    dplyr::select(-time, -cellID) %>%
     as.matrix()
 
 
     eigCov <- eigen(cov(ts))
     VI <- max(eigCov$values)
+
+    if(is.null(VI)){ VI = NA  }
+
+    VI <- data.frame(VI, min(winData$cellID), max(winData$cellID))
+    names(VI) <- c("metricValue", "cellID_min", 'cellID_max')
 
     return(VI)
 

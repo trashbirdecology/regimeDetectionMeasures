@@ -55,26 +55,17 @@ calculate_FisherInformation <-
             FItemp <- (1 / TT) * trapz(t[ind], d2sdt2 ^ 2 / dsdt ^ 4)
         }
 
+        # If FItemp = NA or NULL, then return nothing.
         if(!exists('FItemp')){
-            FItemp = NULL
-            return(FItemp)
+            FItemp = NA
+
+        }
+        if ( is.null(FItemp)   ) {
+            FItemp = NA
+
         }
 
-
-                if ( is.null(FItemp)   ) {
-            FItemp = NULL
-            return(FItemp)
-        }
-
-
-        if ( is.na(FItemp) ) {
-            FItemp = NULL
-            return(FItemp)
-        }
-
-
-                FItemp <-
-            cbind(FItemp, min(dataInFI$cellID) , min(dataInFI$cellID))
-        names(FItemp) <- c('FIvalue', 'cellID_min', 'cellID_max')
+                FItemp <- data.frame(FItemp, min(dataInFI$cellID) , min(dataInFI$cellID))
+        names(FItemp) <- c('metricValue', 'cellID_min', 'cellID_max')
         return(FItemp)
     }

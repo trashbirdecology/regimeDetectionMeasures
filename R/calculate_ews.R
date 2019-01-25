@@ -13,8 +13,6 @@ calculate_EWS <- function(winData, winMove){
         uniqv[which.max(tabulate(match(v, uniqv)))]
     }
 
-
-
     require(PerformanceAnalytics)
 
 
@@ -47,9 +45,16 @@ calculate_EWS <- function(winData, winMove){
         distinct() %>%
         na.omit(mean) %>%
         mutate(winStart = min(winData$time)) %>%
-        mutate(winStop = max(winData$time))
+        mutate(winStop = max(winData$time)) %>% tidyr::gather(key = "metricType",
+                      value = "metricValue",
+                      -variable,
+                      -winStart,
+                      -winStop,
+                      -cellID) %>%
+        mutate(cellID_min = min(winData$cellID)) %>%
+    mutate(cellID_max = max(winData$cellID))
 
 
-    return(ews)
+        return(ews)
 
 }
