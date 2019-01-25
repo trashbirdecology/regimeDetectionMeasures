@@ -51,6 +51,9 @@ calculate_FisherInformation <- function(dataInFI, min.window.dat =2,  fi.equatio
         FItemp <- (1/TT) * trapz(t[ind], d2sdt2^2/dsdt^4)
     }
 
+    if(is.na(FItemp) | is.null(FItemp)){
+        return(FItemp = NULL)
+        }
     FItemp <- cbind(FItemp, min(dataInFI$cellID) , min(dataInFI$cellID))
     names(FItemp) <- c('FIvalue', 'cellID_min', 'cellID_max' )
     return(FItemp)
