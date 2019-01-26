@@ -18,6 +18,7 @@ rdm_window_analysis <- function(dataInRDM,
     if (winMove > 1 | winMove < 1e-10) {
         stop("winMove must be a number between zero and one")
     }
+
     sortVar <- dataInRDM %>% distinct(sortVar) %>% arrange(sortVar)
 
     if (!is.vector(sortVar)) {
