@@ -24,10 +24,10 @@ plot_orig_data <-
              save = F,
              xLabel = "time") {
         p1 <- ggplot(data) +
-            geom_line(aes(x = time, y = value, color = variable), size = .65) +
+            geom_line(aes(x = sortVar, y = value, color = variable), size = .65) +
             theme_classic() +
             theme(legend.position = 'none') +
-        xlab(xLabel)
+            xlab(xLabel)
 
         if (example == T) {
             p1 <- p1 +
@@ -76,16 +76,16 @@ plot_richness <-
              example = F,
              print = T,
              save = F,
-            xLabel = "time") {
+             xLabel = "time") {
         temp <- data %>%
-          #   group_by(time) %>%
+              group_by(sortVar) %>%
             filter(value > 0) %>%
             mutate(nSpp = n())
 
-        p1 <- ggplot(data = temp, aes(y =  nSpp, x = time)) +
+        p1 <- ggplot(data = temp, aes(y =  nSpp, x = sortVar)) +
             geom_line() +
             theme_classic() +
-        xlab(xLabel)
+            xlab(xLabel)
 
 
         if (example == T) {
@@ -139,23 +139,23 @@ plot_timeDiff <-
              example = F,
              print = T,
              save = F,
-            xLabel = "time"){
+             xLabel = "time") {
         temp <- data %>%
             # group_by(time) %>%
             filter(value > 0) %>%
-            select(-site,-value,-variable) %>%
-            distinct(time, .keep_all = T) %>%
-            arrange(time) %>%
+            select(-site, -value, -variable) %>%
+            distinct(sortVar, .keep_all = T) %>%
+            arrange(sortVar) %>%
             #ungroup() %>%
             mutate(sampDiff = as.integer(round(abs(
-                lead(time) - time
-            ))))%>%
-            as_data_frame()
+                lead(sortVar) - sortVar
+            )))) %>%
+            as_tibble()
 
-        p1 <- ggplot(data = temp, aes(y =  sampDiff, x = time)) +
+        p1 <- ggplot(data = temp, aes(y =  sampDiff, x = sortVar)) +
             geom_line() +
             theme_classic() +
-        xlab(xLabel)
+            xlab(xLabel)
 
 
         if (example == T) {
@@ -180,5 +180,3 @@ plot_timeDiff <-
         }
 
     }
-
-

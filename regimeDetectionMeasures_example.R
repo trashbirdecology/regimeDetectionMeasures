@@ -1,8 +1,6 @@
 
 # Munge original data -----------------------------------------------------
-
 origData = munge_orig_dat(example = T)
-head(origData)
 
 # Visualize original data -------------------------------------------------
 
@@ -39,6 +37,7 @@ results <-
         to.calc = c('EWS', 'VI')
     )
 
-
+# Reults will return all results in a single data frame.
+head(results)
 
 # END RUN --------------------------------------------------------

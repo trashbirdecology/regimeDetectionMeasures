@@ -36,9 +36,7 @@ munge_orig_dat <- function(data = NULL, example = T, fill = NA) {
             spread(-time,-site, fill = 0) %>%
             gather(variable, value,-time,-site)
 
-
     } # load example data if data = NULL & example = T
-
 
 
     if("site" %in% colnames(data)==F){
@@ -57,7 +55,24 @@ munge_orig_dat <- function(data = NULL, example = T, fill = NA) {
     }
 
 
+
+    flag.index = names(origData)
+
+    if(!("cellID" %in% flag.index)){
+        flag1 = T
+        origData <- origData %>%
+            mutate(
+                cellID = 1)
+    }else(flag1 = F)
+
+    if(!("sortVar" %in% flag.index)){
+        flag2 = T
+        origData <- origData %>%
+            rename(sortVar = time)
+    }else(flag2 = F)
+
     return(origData)
+
 
 }
 
