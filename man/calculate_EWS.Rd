@@ -4,15 +4,15 @@
 \alias{calculate_EWS}
 \title{Calculate the early warning signals}
 \usage{
-calculate_EWS(dataIn, winMove)
+calculate_EWS(winData, winMove)
 }
 \arguments{
-\item{dataIn}{Used in calc_FisherInformation. Default = 2 data points}
+\item{winData}{Used in calc_FisherInformation. Default = 2 data points}
 
 \item{winMove}{Proportion of data to be included in each moving window (0,1).}
 
 \item{distances}{A data frame of the distances and dervatives of distance travelled at each time point.}
 }
 \description{
-Calculate the early warning signals
+Outputs data frame `ews`. Metric values will be replicated
 }

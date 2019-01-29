@@ -4,7 +4,8 @@
 \alias{plot_timeDiff}
 \title{Plot units of time elapsed between sampling points over the time series.}
 \usage{
-plot_timeDiff(data, example = F, print = T, save = F)
+plot_timeDiff(data, example = F, print = T, save = F,
+  xLabel = "time")
 }
 \arguments{
 \item{print}{print plots to device when print = T. Default print = T.}

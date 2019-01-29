@@ -2,13 +2,23 @@
 % Please edit documentation in R/calculate_distanceTravelled.R
 \name{calculate_distanceTravelled}
 \alias{calculate_distanceTravelled}
-\title{Calculate the `distance travelled` by the entire system. Also calculates the velocity and acceleration of the entire system over the time series.}
+\title{Calculate the `distance travelled` by the entire system.}
 \usage{
-calculate_distanceTravelled(dataIn, derivs = T, print = T)
+calculate_distanceTravelled(dataInDist, derivs = T, print = T)
 }
 \arguments{
-\item{print}{}
+\item{dataInDist}{A data frame containing the following columns:
+- **Variable** is usually species identity
+- **Value** is the observed value (e.g. count, density) of the variable
+- **sortVar** is the variable along which distance is calculated (e.g., time). The example data set is munged such that the sortVar column is named time.}
+
+\item{derivs}{logical (default TRUE), calculates the velocity and acceleration of the distance travelled}
+
+\item{print}{logical (default TRUE), prints output to device}
 }
 \description{
-Calculate the `distance travelled` by the entire system. Also calculates the velocity and acceleration of the entire system over the time series.
+Calculate the `distance travelled` by the entire system.
+}
+\details{
+Also calculates the velocity and acceleration of the entire system over the time series.
 }

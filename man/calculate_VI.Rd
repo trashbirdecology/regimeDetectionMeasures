@@ -4,11 +4,14 @@
 \alias{calculate_VI}
 \title{Calculate the Variance Index}
 \usage{
-calculate_VI(winData)
+calculate_VI(winData, fill = 0)
+}
+\arguments{
+\item{fill}{Fill for missing data. Default = 0.}
 }
 \description{
 Calculate the Variance Index
 }
 \references{
-[1] Brock and Carpenter YYYY
+[1] Brock, William A., and Stephen R. Carpenter. "Variance as a leading indicator of regime shift in ecosystem services." Ecology and Society 11.2 (2006).
 }

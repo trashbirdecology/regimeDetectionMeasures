@@ -6,4 +6,4 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.1.2), dplyr, tidyr, ggplot2, PerformanceAnalytics, kedd
-RoxygenNote: 6.1.0.9000
+RoxygenNote: 6.1.1

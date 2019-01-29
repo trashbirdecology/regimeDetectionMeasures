@@ -4,7 +4,8 @@
 \alias{plot_richness}
 \title{Plot species richness over time for the original data}
 \usage{
-plot_richness(data, example = F, print = T, save = F)
+plot_richness(data, example = F, print = T, save = F,
+  xLabel = "time")
 }
 \arguments{
 \item{print}{print plots to device when print = T. Default print = T.}

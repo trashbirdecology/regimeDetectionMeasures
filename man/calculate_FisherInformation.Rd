@@ -4,11 +4,11 @@
 \alias{calculate_FisherInformation}
 \title{Fisher Information: three equations for calculating.}
 \usage{
-calculate_FisherInformation(dataIn, min.window.dat = 2,
+calculate_FisherInformation(dataInFI, min.window.dat = 2,
   fi.equation = "7.12")
 }
 \arguments{
-\item{dataIn}{A subset of data for each moving window. These data will be used to calculate the Fisher Information}
+\item{dataInFI}{A subset of data for each moving window. These data will be used to calculate the Fisher Information}
 }
 \description{
 Fisher Information: three equations for calculating.

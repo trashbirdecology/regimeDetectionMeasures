@@ -4,12 +4,15 @@
 \alias{plot_orig_data}
 \title{Plot original data}
 \usage{
-plot_orig_data(data, example = F, print = T, save = F)
+plot_orig_data(data, example = F, print = T, save = F,
+  xLabel = "time")
 }
 \arguments{
 \item{print}{print plots to device when print = T. Default print = T.}
 
 \item{save}{NEEDS TO BE UPDATED TO CREATE LOCAL PLOT FOLDER AND EXPORT TO THIS FOLDER. JLB.}
+
+\item{xLabel}{Option to change the xLabel on resultant ggplot from "time" to ...}
 }
 \value{
 Function returns a data frame in long format with columns specifying site name, time (or spatial unit), variable (e.g. species identity), and value (e.g. species count).

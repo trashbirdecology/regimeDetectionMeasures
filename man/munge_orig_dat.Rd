@@ -11,7 +11,7 @@ munge_orig_dat(data = NULL, example = T, fill = NA)
 
 \item{example}{Loads and munges data when parameters data = NULL & Default = T, running the function will load and munge data from [1].}
 
-\item{fill}{Fills empty cells with this value. Default = NA. Consider using zero (0) as a fill if using species counts. Beware when using NA vs. zero.}
+\item{fill}{Fills empty cells with this value. Default = NA. Consider using zero (0) as a fill if using species counts. Beware when using NA vs. zero. Default = 0}
 }
 \value{
 Function returns a data frame in long format with columns specifying site name, time (or spatial unit), variable (e.g. species identity), and value (e.g. species count).
