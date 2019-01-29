@@ -1,5 +1,5 @@
 ## About  
-This package can be calculates a handful of measures used to 'detect ecological regime shifts'. 
+This package will calculate a various regime detection metrics that have been used to 'detect ecological regime shifts'. A 'new' metric, **distance travelled** is also calculated (Burnett and others, *in prep*). 
 
 ## Example
 Run `example.R` to view an example run of all functions in the package.
