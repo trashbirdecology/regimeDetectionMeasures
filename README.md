@@ -7,7 +7,7 @@ Run `example.R` to view an example run of all functions in the package.
 ## Measures/metrics calculated  
 
 COMPOSITE:
-1. Distance travelled
+1. Distance travelled -see also package [`distanceTravelled`](https://github.com/TrashBirdEcology/distanceTravelled). 
 1. Fisher Information
 1. Variance Index
 
