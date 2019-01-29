@@ -2,7 +2,7 @@
 This package can be calculates a handful of measures used to 'detect ecological regime shifts'. 
 
 ## Example
-Run example.R to view an example run of all functions in the package.
+Run `example.R` to view an example run of all functions in the package.
 
 ## Measures/metrics calculated  
 
