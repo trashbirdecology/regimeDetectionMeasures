@@ -27,8 +27,8 @@ rdm_window_analysis <- function(dataInRDM,
     if (!is.vector(sortVar)) {
         sortVar = sortVar$sortVar
     }
-
-    if("cellID" %in% names(winData)){ winData = winData %>% dplyr::select(-cellID)}
+#
+#     if("cellID" %in% names(winData)){ winData = winData %>% dplyr::select(-cellID)}
 
 
 
@@ -53,7 +53,8 @@ rdm_window_analysis <- function(dataInRDM,
 
         if (length(unique(winData$sortVar)) < min.window.dat | nrow(winData) <=
             min.window.dat) {
-            warning("# time points < min.window.dat time points -- need more to calculate metrics. Skipping current window.")
+            warning("# time points < min.window.dat time points -- need more to calculate metrics.
+                    Skipping current window.")
             next
         }
         if ("FI" %in% to.calc) {
