@@ -9,6 +9,6 @@ Depends: R (>= 3.1.2), dplyr, tidyr, ggplot2, PerformanceAnalytics, kedd
 RoxygenNote: 6.1.1
 Authors@R: c(
     person("Jessica", "Burnett", , "jessicaleighburnett@gmail.com", c("aut", "cre"), comment = c(ORCID = "")),
-    person("Nathaniel", "Price", role = c("aut", "cre"), comment = c(ORCID = ""))
+    person("Nathaniel", "Price", role = c("aut"), comment = c(ORCID = ""))
     )
 Description: Calculate a suite of regime detection metrics for multivariate time series.
