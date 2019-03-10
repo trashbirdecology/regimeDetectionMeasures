@@ -2,6 +2,8 @@
 #'
 #' Also calculates the velocity and acceleration of the entire system over the time series.
 #' @description
+#' @author Jessica L. Burnett
+#' @author Nathaniel B. Price
 #' @param dataInDist A data frame containing the following columns:
 #'  - **Variable** is usually species identity
 #'  - **Value** is the observed value (e.g. count, density) of the variable
