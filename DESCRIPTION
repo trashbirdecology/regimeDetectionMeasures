@@ -12,3 +12,7 @@ Authors@R: c(
     person("Nathaniel", "Price", role = c("aut"), comment = c(ORCID = ""))
     )
 Description: Calculate a suite of regime detection metrics for multivariate time series.
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

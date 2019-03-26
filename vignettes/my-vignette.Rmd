@@ -1,6 +1,6 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "A Quick Run-through of the Package Functions and Goals"
+author: "Jessica Burnett"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette:
         fig_caption: yes
@@ -9,32 +9,86 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
-The function munge_orig_dat will arrange and sort your original data 
 ```{r setup, include = FALSE}
+knitr::opts_chunk$set(results = "hide", cache = TRUE, cache.path = "_cache/", message = FALSE, warning=FALSE, eval=TRUE, echo=FALSE, error=FALSE, fig.align='center',
+                      out.width = "85%")
+```
+
+
+# About 
+This package calculates multiple metrics which I have categorized into two types:
+1. COMPOSITE:
+    1. Distance travelled -see also package [`distanceTravelled`](https://github.com/TrashBirdEcology/distanceTravelled). 
+    1. Fisher Information
+    1. Variance Index
+
+1. UNIVARIABLE:
+    1. Skewness (mean and mode versions)
+    1. Kurtosis
+    1. Variance
+    1. Mean
+    1. Mode
+    1. Coefficient of variation, CV
+    1. Autocorrelation lag-1 (using `stats::acf`)
+
+
+The UNIVARIABLE metrics are calculated using a moving-window analysis and can handle only individual state variables. That is, you will get one measurement per state variable. The  COMPOSITE metrics can handle an infinite number of state variables, and will return a single measurement at each time point. It should be noted  that the **Fisher Information** can be calculated using multiple methods (see the function description for `rdm_window_analysis` for more details).
+
+# Munge and explore the original data
+The function munge_orig_dat will munge your original dataset. If no data is provided in the argument `data`, it will download an example dataset from [Spanbauer][1] *[link to original data](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0108936). 
+```{r}
 origData = munge_orig_dat(example = T)
+glimpse(origData[1:3,])
+```
+If the argument for `fill` is not specified, the function `munge_orig_dat` will fill in missing species by time observations with zero ('0'). If data are true zeroes, in that a missing observation is not an NA, but is rather something else, this can be specified:
+```{r, echo=TRUE}
+munge_orig_dat(example = T, fill=NA) %>% glimpse()
+```
 
-# Visualize original data -------------------------------------------------
+Next, we can visualzie the original data using a few different functions:
 
-# Plot the original time series abundances
+We can plot the original time series:
+```{r}
 plot_orig_data(data = origData,
                example = F,
                print = T)
+```
 
-# Plot the distance between observations
+We can inspect the time beteween observations (i.e., is sampling regular, or irregular?):
+```{r, fig.cap= "Sampling is irregular for the paleodiatom example data from [1]."}
 plot_timeDiff(data = origData,
               example = F,
               print = T)
+```
 
-# Plot species richness over time
+We can examine if species richness, or the number of unique state variables changes over time:
+```{r, fig.cap = "Species richness exhibits a sharp decline before time=-2000."}
 plot_richness(data = origData,
               example = F,
               print = T)
+```
 
-# Calculate distance travelled and derviatves of this ---------------------
+# Calculate metrics: velocity and distance travelled
 
-(distances <- calculate_distanceTravelled(origData, derivs = T))
+Next, we want to calculate the distance travelled, velocity, and acceleration measures. This requires the data input `dataInDist` to have the following column names: c("sortVar", "variable","value"). If the column 'site' exists, and multiple sites are sampled, then the metrics will be calculated at each site independent of one another. Our example data [1] has a unique site, 'Foy' (Foy Lake).
 
+```{r, echo = TRUE}
+distances <- calculate_distanceTravelled(origData, derivs = T)
+glimpse(distances)
+```
+This function outputs the following variables: 
+- cellID: this is imputed, and can be ignored. This is used for the package `bbsRDM`
+- sortVar: this is the 'x-axis' variable; usually, this will be time, but if conducting spatial analyses, can be space (e.g. longitude)
+- ds: this is the total change in system variables between the current and previous time point. This value can take on any number or sign, and is uniquely calculated for every time step **except the first**
+- s: this the the *distance travelled* metric. It is used to calculate the velocity (*dsdt*), and is calculated at each time step as the cumulative sum of **s**.
+- dsdt (*v*): this is the velocity measurement. It is calculated as the speed of **S** at each time step. This is the first derivative of **s**, **s^'**
+-d2sdt2: this is the acceleration of **s** at each time step. This is the second derivative of **s**, **s^''**.
+
+
+We can visualize these metrics:
+```{r}
+
+```
 
 # Calculate FI, VI, and early warning signals --------------------------------------------------------
 
@@ -54,3 +108,7 @@ head(results)
 
 # END RUN --------------------------------------------------------
 ```
+
+
+# References and sources
+[1] Spanbauer, Trisha L., Craig R. Allen, David G. Angeler, Tarsha Eason, Sherilyn C. Fritz, Ahjond S. Garmestani, Kirsty L. Nash, and Jeffery R. Stone. "Prolonged instability prior to a regime shift." PLoS One 9, no. 10 (2014): e108936.
