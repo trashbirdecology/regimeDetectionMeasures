@@ -143,7 +143,7 @@ plot_timeDiff <-
         temp <- data %>%
             # group_by(time) %>%
             filter(value > 0) %>%
-            select(-site, -value, -variable) %>%
+            dplyr::select(-site, -value, -variable) %>%
             distinct(sortVar, .keep_all = T) %>%
             arrange(sortVar) %>%
             #ungroup() %>%
