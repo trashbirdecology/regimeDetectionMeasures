@@ -16,6 +16,9 @@ knitr::opts_chunk$set(results = "hide", cache = TRUE, cache.path = "_cache/", me
 
 
 # About 
+
+This package will calculate a various regime detection metrics that have been used to 'detect ecological regime shifts'. A 'new' metric, **distance travelled** is also calculated (Burnett and others, *in prep*). 
+
 This package calculates multiple metrics which I have categorized into two types:
 1. COMPOSITE:
     1. Distance travelled -see also package [`distanceTravelled`](https://github.com/TrashBirdEcology/distanceTravelled). 
