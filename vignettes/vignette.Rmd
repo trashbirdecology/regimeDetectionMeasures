@@ -41,7 +41,7 @@ library(regimeDetectionMeasures)
 
 # Munge and explore the original data
 The function munge_orig_dat will munge your original dataset. If no data is provided in the argument `data`, it will download an example dataset from [Spanbauer][1] *[link to original data](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0108936). 
-```{r}
+```{r, echo=TRUE}
 origData = munge_orig_dat(example = T)
 glimpse(origData[1:3,])
 ```
