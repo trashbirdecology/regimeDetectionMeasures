@@ -1,4 +1,3 @@
-
 #' @title Plot units of time elapsed between sampling points over the time series.
 #' This function plots the amount of time that has elapsed since the last sampled unit time.
 #' @param data The original data frame
@@ -7,8 +6,7 @@
 #' @return Function returns a data frame in long format with columns specifying site name, time (or spatial unit), variable (e.g. species identity), and value (e.g. species count).
 #' @references Spanbauer, Trisha L., et al. "Prolonged instability prior to a regime shift." PLoS One 9.10 (2014): e108936.
 
-plot_timeDiff <-
-    function(data,
+plot_timeDiff <- function(data,
              example = FALSE,
              print = TRUE,
              xLabel = "time") {
