@@ -35,15 +35,15 @@ The UNIVARIABLE metrics are calculated using a moving-window analysis and can ha
 
 # Install pakage and load 
 ```{r, echo=TRUE, warning=FALSE, message=FALSE}
-devtools::install_github("trashbirdecology/regimedetectionmeasures", force=FALSE, dependencies = TRUE)
+devtools::install_github("trashbirdecology/regimedetectionmeasures", force=TRUE, dependencies = TRUE)
 library(regimeDetectionMeasures)
 ```
 
 # Munge and explore the original data
 The function munge_orig_dat will munge your original dataset. If no data is provided in the argument `data`, it will download an example dataset from [Spanbauer][1] *[link to original data](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0108936). 
 ```{r, echo=TRUE}
-origData = munge_orig_dat(example = T)
-glimpse(origData[1:3,])
+origData <-  munge_orig_dat(example = T)
+glimpse(origData)
 ```
 If the argument for `fill` is not specified, the function `munge_orig_dat` will fill in missing species by time observations with zero ('0'). If data are true zeroes, in that a missing observation is not an NA, but is rather something else, this can be specified:
 ```{r, echo=TRUE}
@@ -58,7 +58,7 @@ plot_orig_data(data = origData)
 ```
 
 We can inspect the time beteween observations (i.e., is sampling regular, or irregular?):
-```{r, fig.cap= "Sampling is irregular for the paleodiatom example data from [1]."}
+```{r, fig.cap= "Sampling is irregular for the paleodiatom example data from Spanbauer et al. (2014)."}
 plot_timeDiff(data = origData)
 ```
 
