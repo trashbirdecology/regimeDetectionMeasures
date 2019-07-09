@@ -21,10 +21,6 @@ Function returns a data frame in long format with columns specifying site name, 
 \description{
 This function plots the species richness over time as a function of the total unique variables within each time
 }
-\examples{
-df <- munge_orig_dat()
-plot_richness(df)
-}
 \references{
 Spanbauer, Trisha L., et al. "Prolonged instability prior to a regime shift." PLoS One 9.10 (2014): e108936.
 }

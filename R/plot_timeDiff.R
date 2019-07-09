@@ -1,10 +1,11 @@
 #' @title Plot units of time elapsed between sampling points over the time series.
-#' This function plots the amount of time that has elapsed since the last sampled unit time.
+#' @description This function plots the amount of time that has elapsed since the last sampled unit time.
 #' @param data The original data frame
 #' @param example Logical. If TRUE will use the paleodiatom data from Spanbauer et al. (2014), else will use input data.
 #' @param print print plots to device when print = T. Default print = T.
 #' @return Function returns a data frame in long format with columns specifying site name, time (or spatial unit), variable (e.g. species identity), and value (e.g. species count).
 #' @references Spanbauer, Trisha L., et al. "Prolonged instability prior to a regime shift." PLoS One 9.10 (2014): e108936.
+
 plot_timeDiff <- function(data,
              example = FALSE,
              print = TRUE,

@@ -1,4 +1,3 @@
-
 #' @title Plot species richness over time for the original data
 #' @description This function plots the species richness over time as a function of the total unique variables within each time
 #' @param data The original data frame
@@ -8,8 +7,6 @@
 #' @param xLabel Option to change the xLabel on resultant ggplot from "time" to ...
 #' @references Spanbauer, Trisha L., et al. "Prolonged instability prior to a regime shift." PLoS One 9.10 (2014): e108936.
 #' @examples
-#' df <- munge_orig_dat()
-#' plot_richness(df)
 
 plot_richness <-
     function(data,

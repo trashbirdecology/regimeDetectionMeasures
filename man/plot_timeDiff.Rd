@@ -2,8 +2,7 @@
 % Please edit documentation in R/plot_timeDiff.R
 \name{plot_timeDiff}
 \alias{plot_timeDiff}
-\title{Plot units of time elapsed between sampling points over the time series.
-This function plots the amount of time that has elapsed since the last sampled unit time.}
+\title{Plot units of time elapsed between sampling points over the time series.}
 \usage{
 plot_timeDiff(data, example = FALSE, print = TRUE, xLabel = "time")
 }
@@ -18,7 +17,6 @@ plot_timeDiff(data, example = FALSE, print = TRUE, xLabel = "time")
 Function returns a data frame in long format with columns specifying site name, time (or spatial unit), variable (e.g. species identity), and value (e.g. species count).
 }
 \description{
-Plot units of time elapsed between sampling points over the time series.
 This function plots the amount of time that has elapsed since the last sampled unit time.
 }
 \references{
