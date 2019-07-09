@@ -34,7 +34,7 @@ The UNIVARIABLE metrics are calculated using a moving-window analysis and can ha
 
 # Install pakage and load 
 ```{r}
-devtools::install_github("trashbirdecology/regimedetectionmeasures", force=FALSE, dependencies = TRUE)
+devtools::install_github("trashbirdecology/regimedetectionmeasures", force=TRUE, dependencies = TRUE)
 library(regimeDetectionMeasures)
 ```
 
