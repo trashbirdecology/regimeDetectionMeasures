@@ -1,5 +1,6 @@
 #' @title Calculate the early warning signals
 #' @description Outputs data frame 'ews'.
+#' @export
 #' @param winMove Proportion of data to be included in each moving window (0,1).
 #' @param distances A data frame of the distances and dervatives of distance travelled at each time point.
 #' @param winData Used in calc_FisherInformation. Default = 2 data points

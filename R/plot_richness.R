@@ -1,6 +1,7 @@
 #' @title Plot species richness over time for the original data
 #' @description This function plots the species richness over time as a function of the total unique variables within each time
 #' @param data The original data frame
+#' @export
 #' @param example Logical. If TRUE will use the paleodiatom data from Spanbauer et al. (2014), else will use input data.
 #' @param print print plots to device when print = T. Default print = T.
 #' @return Function returns a data frame in long format with columns specifying site name, time (or spatial unit), variable (e.g. species identity), and value (e.g. species count).

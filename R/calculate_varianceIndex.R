@@ -1,4 +1,5 @@
 #' @title Calculate the Variance Index
+#' @export
 #' @description The Variance Index is the maximum eigenvalue of the variance covariance matrix, and is described in Brock et al. (2006).
 #' @param winData A data frame.
 #' @param fill Fill for missing data. Default = 0.

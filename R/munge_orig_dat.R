@@ -3,6 +3,7 @@
 #' @param example Loads and munges data when parameters data = NULL & Default = T, running the function will load and munge data from Spanbauer et al. 2014.
 #' @param fill Fills empty cells with this value. Default = NA. Consider using zero (0) as a fill if using species counts. Beware when using NA vs. zero. Default = 0
 #' @return Function returns a data frame in long format with columns specifying site name, time (or spatial unit), variable (e.g. species identity), and value (e.g. species count).
+#' @export
 #' @examples
 #' munge_orig_dat() # will not write an object to environment
 #' newDf = munge_orig_dat() # save the object to environment

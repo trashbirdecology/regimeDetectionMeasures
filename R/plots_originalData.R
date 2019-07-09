@@ -1,6 +1,7 @@
 #' @title Plot original data
 #' @description This function plots variables as % relative abundance of variable *x* a time *t*. Missing observations are treated as zeroes. Variables with unit == zero are not considered at time *t*.
 #' @param data A data frame.
+#' @export
 #' @param example Logical. Specify "TRUE" if you would like to use example data for demonstration.
 #' @param xLabel Option to change the xLabel on resultant ggplot from "time" to ...
 #' @param print print plots to device when print = T. Default print = T.

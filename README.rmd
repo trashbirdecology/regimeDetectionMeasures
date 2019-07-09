@@ -1,10 +1,11 @@
 ---
 title: "A Quick Run-through of the Package Functions and Goals"
-author: "Jessica Burnett"
-date: "`r Sys.Date()`"
-output: #pdf_document
-  md_document:
-    variant: markdown_github
+output: pdf_document
+  # md_document:
+  #   variant: markdown_github
+author: "Jessica L. Burnett"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+tags: [regime shift, ecology]
 ---
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(include=FALSE, fig.align='center', out.width = "85%")
@@ -34,14 +35,14 @@ The UNIVARIABLE metrics are calculated using a moving-window analysis and can ha
 
 # Install pakage and load 
 ```{r, echo=TRUE, warning=FALSE, message=FALSE}
-devtools::install_github("trashbirdecology/regimedetectionmeasures", force=TRUE, dependencies = TRUE)
+devtools::install_github("trashbirdecology/regimedetectionmeasures", force=FALSE)
 library(regimeDetectionMeasures)
 ```
 
 # Munge and explore the original data
 The function munge_orig_dat will munge your original dataset. If no data is provided in the argument `data`, it will download an example dataset from [Spanbauer][1] *[link to original data](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0108936). 
 ```{r, echo=TRUE}
-origData <-  munge_orig_dat(example = T)
+origData <-  munge_orig_dat(example = TRUE)
 glimpse(origData)
 ```
 If the argument for `fill` is not specified, the function `munge_orig_dat` will fill in missing species by time observations with zero ('0'). If data are true zeroes, in that a missing observation is not an NA, but is rather something else, this can be specified:

@@ -3,6 +3,7 @@
 #' @param dataInDist A data frame containing the following columns: "Variable" is usually species identity;  "Value" is the observed value (e.g. count, density) of the variable; "sortVar" is the variable along which distance is calculated (e.g., time). The example data set is munged such that the sortVar column is named time.
 #' @param derivs logical (default TRUE), calculates the velocity and acceleration of the distance travelled
 #' @param print logical (default TRUE), prints output to device
+#' @export
 
 calculate_distanceTravelled <-
     function(dataInDist,

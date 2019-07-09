@@ -5,7 +5,7 @@
 #' @param min.window.dat Used in calc_FisherInformation. Minimum # of data points in each window to include in calculations. Default = 2 data points
 #' @param to.calc Which measures to calculate. VI variance index. FI Fisher Information. EWS 1st through 4th moments, etc. Default = ALL measures.
 #' @param winMove The proportion of each time series to be included in the moving window. Default = 0.25 (or 25 percent of the observations).
-
+#' @export
 rdm_window_analysis <- function(dataInRDM,
                                 winMove = 0.25,
                                 min.window.dat = 2,
