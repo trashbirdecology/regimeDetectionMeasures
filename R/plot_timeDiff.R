@@ -9,7 +9,7 @@
 plot_timeDiff <- function(data,
              example = FALSE,
              print = TRUE,
-             xLabel = "time") {
+             xLabel = "time"){
         temp <- data %>%
             # group_by(time) %>%
             filter(value > 0) %>%

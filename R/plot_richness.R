@@ -11,7 +11,7 @@ plot_richness <-
     function(data,
              example = FALSE,
              print = TRUE,
-             xLabel = "time") {
+             xLabel = "time"){
         temp <- data %>%
             group_by(sortVar) %>%
             filter(value > 0) %>%

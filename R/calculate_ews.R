@@ -3,9 +3,8 @@
 #' @param winMove Proportion of data to be included in each moving window (0,1).
 #' @param distances A data frame of the distances and dervatives of distance travelled at each time point.
 #' @param winData Used in calc_FisherInformation. Default = 2 data points
-#' @export calculate_EWS
-#'
-calculate_EWS <- function(winData, winMove) {
+
+calculate_EWS <- function(winData, winMove){
     # Create function for getting mode of data
     getmode <- function(v) {
         uniqv <- unique(v)

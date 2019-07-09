@@ -22,6 +22,7 @@ Munge the Original Data Frame.
 \examples{
 munge_orig_dat() # will not write an object to environment
 newDf = munge_orig_dat() # save the object to environment
+
 }
 \references{
 Spanbauer, Trisha L., et al. "Prolonged instability prior to a regime shift." PLoS One 9.10 (2014): e108936.
