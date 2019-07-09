@@ -5,6 +5,7 @@ date: "`r Sys.Date()`"
 output:
   md_document:
     variant: markdown_github
+  pdf_document:
 ---
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(include=FALSE, fig.align='center', out.width = "85%")
@@ -58,7 +59,7 @@ plot_orig_data(data = origData)
 ```
 
 We can inspect the time beteween observations (i.e., is sampling regular, or irregular?):
-```{r, fig.cap= "Sampling is irregular for the paleodiatom example data from Spanbauer et al. (2014)."}
+```{r, eval=FALSE, fig.cap= "Sampling is irregular for the paleodiatom example data from Spanbauer et al. (2014)."}
 plot_timeDiff(data = origData)
 ```
 
