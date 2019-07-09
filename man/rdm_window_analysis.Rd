@@ -4,15 +4,11 @@
 \alias{rdm_window_analysis}
 \title{Calculate the regime detection measured within a moving window.}
 \usage{
-rdm_window_analysis(dataInRDM, winMove = 0.25, overrideSiteErr = F,
-  min.window.dat = 2, fi.equation = "7.12", to.calc = c("VI", "FI",
-  "EWS"), fill = 0)
+rdm_window_analysis(dataInRDM, winMove = 0.25, min.window.dat = 2,
+  fi.equation = "7.12", to.calc = c("VI", "FI", "EWS"), fill = 0)
 }
 \arguments{
-\item{dataInRDM}{A data frame with columns:
-- **sortVar**: usually time or some spatial dimension
-- **variable**: usually species
-- **value**: observations about the variable (e.g., count)}
+\item{dataInRDM}{A data frame with columns: sortVar: usually time or some spatial dimension; variable: usually species; value: observations about the variable (e.g., count)}
 
 \item{winMove}{Number as proportion of each time series to be included in the moving windows. Default = 0.25 (25% of data included in each window).}
 
@@ -20,10 +16,10 @@ rdm_window_analysis(dataInRDM, winMove = 0.25, overrideSiteErr = F,
 
 \item{to.calc}{Which measures to calculate. VI variance index. FI Fisher Information. EWS 1st through 4th moments, etc. Default = ALL measures.}
 
-\item{fill}{Used in the function 'calculate_VI()'. Fill value for missing data. Default = 0}
+\item{fill}{Used in the function 'calculate_VI'. Fill value for missing data. Default = 0}
 
 \item{min.windowdat}{Minimum # of data points in each window to include in calculations. Default = 2.}
 }
 \description{
-Calculate the regime detection measured within a moving window.
+This function is a wrapper for calculating various regime detection measures within a moving window.
 }

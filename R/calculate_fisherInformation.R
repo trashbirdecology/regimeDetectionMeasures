@@ -1,10 +1,9 @@
 #' @title Fisher Information: three equations for calculating.
-#'
 #' @param dataInFI A subset of data for each moving window. These data will be used to calculate the Fisher Information
-#' @param fi.equation
-#' @param min.window.dat
-#' @export
-#'
+#' @param fi.equation Equations descirbed in Mayer et al. (2007)
+#' @references  Mayer, Audrey L., et al. "Applications of Fisher information to the management of sustainable environmental systems." Exploratory data analysis using Fisher information. Springer, London, 2007. 217-244.
+#' @param min.window.dat The minimum number of observation points (e.g. time) within the moving window for Fisher Information to be calculated
+
 calculate_FisherInformation <-
     function(dataInFI,
              min.window.dat = 2,

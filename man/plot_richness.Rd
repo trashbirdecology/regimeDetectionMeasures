@@ -2,16 +2,18 @@
 % Please edit documentation in R/plots_originalData.R
 \name{plot_richness}
 \alias{plot_richness}
-\title{Plot species richness over time for the original data
-This function plots species richness at each time unit. Here, species richness is the total number of unique variables with unit measurement (e.g., abundance) > 0 and not NA.}
+\title{Plot species richness over time for the original data}
 \usage{
-plot_richness(data, example = F, print = T, save = F,
-  xLabel = "time")
+plot_richness(data, example = FALSE, print = TRUE, xLabel = "time")
 }
 \arguments{
+\item{data}{The original data frame}
+
+\item{example}{Logical. If TRUE will use the paleodiatom data from Spanbauer et al. (2014), else will use input data.}
+
 \item{print}{print plots to device when print = T. Default print = T.}
 
-\item{save}{NEEDS TO BE UPDATED TO CREATE LOCAL PLOT FOLDER AND EXPORT TO THIS FOLDER. JLB.}
+\item{xLabel}{Option to change the xLabel on resultant ggplot from "time" to ...}
 }
 \value{
 Function returns a data frame in long format with columns specifying site name, time (or spatial unit), variable (e.g. species identity), and value (e.g. species count).
@@ -22,8 +24,7 @@ This function plots the species richness over time as a function of the total un
 \examples{
 df <- munge_orig_dat()
 plot_richness(df)
-
 }
 \references{
-[1] Spanbauer, Trisha L., et al. "Prolonged instability prior to a regime shift." PLoS One 9.10 (2014): e108936.
+Spanbauer, Trisha L., et al. "Prolonged instability prior to a regime shift." PLoS One 9.10 (2014): e108936.
 }

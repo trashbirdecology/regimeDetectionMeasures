@@ -9,7 +9,7 @@ munge_orig_dat(data = NULL, example = T, fill = NA)
 \arguments{
 \item{data}{A data frame with ENTER DESCRIPTION}
 
-\item{example}{Loads and munges data when parameters data = NULL & Default = T, running the function will load and munge data from [1].}
+\item{example}{Loads and munges data when parameters data = NULL & Default = T, running the function will load and munge data from Spanbauer et al. 2014.}
 
 \item{fill}{Fills empty cells with this value. Default = NA. Consider using zero (0) as a fill if using species counts. Beware when using NA vs. zero. Default = 0}
 }
@@ -24,5 +24,5 @@ munge_orig_dat() # will not write an object to environment
 newDf = munge_orig_dat() # save the object to environment
 }
 \references{
-[1] Spanbauer, Trisha L., et al. "Prolonged instability prior to a regime shift." PLoS One 9.10 (2014): e108936.
+Spanbauer, Trisha L., et al. "Prolonged instability prior to a regime shift." PLoS One 9.10 (2014): e108936.
 }

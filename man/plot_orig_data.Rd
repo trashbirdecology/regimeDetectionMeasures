@@ -2,16 +2,16 @@
 % Please edit documentation in R/plots_originalData.R
 \name{plot_orig_data}
 \alias{plot_orig_data}
-\title{Plot original data
-This function plots variables as % relative abundance of variable *x* a time *t*. Missing observations are treated as zeroes. Variables with unit == zero are not considered at time *t*.}
+\title{Plot original data}
 \usage{
-plot_orig_data(data, example = F, print = T, save = F,
-  xLabel = "time")
+plot_orig_data(data, example = FALSE, print = TRUE, xLabel = "time")
 }
 \arguments{
-\item{print}{print plots to device when print = T. Default print = T.}
+\item{data}{A data frame.}
 
-\item{save}{NEEDS TO BE UPDATED TO CREATE LOCAL PLOT FOLDER AND EXPORT TO THIS FOLDER. JLB.}
+\item{example}{Logical. Specify "TRUE" if you would like to use example data for demonstration.}
+
+\item{print}{print plots to device when print = T. Default print = T.}
 
 \item{xLabel}{Option to change the xLabel on resultant ggplot from "time" to ...}
 }
@@ -19,14 +19,12 @@ plot_orig_data(data, example = F, print = T, save = F,
 Function returns a data frame in long format with columns specifying site name, time (or spatial unit), variable (e.g. species identity), and value (e.g. species count).
 }
 \description{
-Plot original data
 This function plots variables as % relative abundance of variable *x* a time *t*. Missing observations are treated as zeroes. Variables with unit == zero are not considered at time *t*.
 }
 \examples{
 df <- munge_orig_dat()
 plot_orig_data(df)
-
 }
 \references{
-[1] Spanbauer, Trisha L., et al. "Prolonged instability prior to a regime shift." PLoS One 9.10 (2014): e108936.
+Spanbauer, Trisha L., et al. "Prolonged instability prior to a regime shift." PLoS One 9.10 (2014): e108936.
 }

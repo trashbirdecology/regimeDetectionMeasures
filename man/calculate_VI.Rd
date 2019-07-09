@@ -7,11 +7,13 @@
 calculate_VI(winData, fill = 0)
 }
 \arguments{
+\item{winData}{A data frame.}
+
 \item{fill}{Fill for missing data. Default = 0.}
 }
 \description{
-Calculate the Variance Index
+The Variance Index is the maximum eigenvalue of the variance covariance matrix, and is described in Brock et al. (2006).
 }
 \references{
-[1] Brock, William A., and Stephen R. Carpenter. "Variance as a leading indicator of regime shift in ecosystem services." Ecology and Society 11.2 (2006).
+Brock, William A., and Stephen R. Carpenter. "Variance as a leading indicator of regime shift in ecosystem services." Ecology and Society 11.2 (2006).
 }

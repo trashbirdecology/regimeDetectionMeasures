@@ -1,9 +1,9 @@
 #' @title Calculate the Variance Index
-#' @param winData
-#' @param dataIn
+#' @description The Variance Index is the maximum eigenvalue of the variance covariance matrix, and is described in Brock et al. (2006).
+#' @param winData A data frame.
 #' @param fill Fill for missing data. Default = 0.
-#' @references [1] Brock, William A., and Stephen R. Carpenter. "Variance as a leading indicator of regime shift in ecosystem services." Ecology and Society 11.2 (2006).
-#' @export
+#' @references Brock, William A., and Stephen R. Carpenter. "Variance as a leading indicator of regime shift in ecosystem services." Ecology and Society 11.2 (2006).
+
 calculate_VI <- function(winData, fill = 0) {
 
   # Remove site variable if present

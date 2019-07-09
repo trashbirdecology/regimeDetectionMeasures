@@ -14,5 +14,5 @@ calculate_EWS(winData, winMove)
 \item{distances}{A data frame of the distances and dervatives of distance travelled at each time point.}
 }
 \description{
-Outputs data frame `ews`. Metric values will be replicated
+Outputs data frame 'ews'.
 }
