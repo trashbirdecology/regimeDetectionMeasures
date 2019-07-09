@@ -33,8 +33,8 @@ This package calculates multiple metrics which I have categorized into two types
 The UNIVARIABLE metrics are calculated using a moving-window analysis and can handle only individual state variables. That is, you will get one measurement per state variable. The  COMPOSITE metrics can handle an infinite number of state variables, and will return a single measurement at each time point. It should be noted  that the **Fisher Information** can be calculated using multiple methods (see the function description for `rdm_window_analysis` for more details).
 
 # Install pakage and load 
-```{r}
-devtools::install_github("trashbirdecology/regimedetectionmeasures", force=TRUE, dependencies = TRUE)
+```{r, echo=TRUE, warning=FALSE, message=FALSE}
+devtools::install_github("trashbirdecology/regimedetectionmeasures", force=FALSE, dependencies = TRUE)
 library(regimeDetectionMeasures)
 ```
 

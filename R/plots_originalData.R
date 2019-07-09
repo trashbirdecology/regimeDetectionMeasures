@@ -37,9 +37,6 @@ plot_orig_data <-
             print(p1)
         }
 
-        if (save == T) {
-            return(p1)
-        }
 
     }
 
@@ -140,10 +137,6 @@ plot_timeDiff <-
 
         if (print == T) {
             print(p1)
-        }
-
-        if (save == T) {
-            return(p1)
         }
 
     }
