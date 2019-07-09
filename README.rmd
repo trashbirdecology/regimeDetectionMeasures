@@ -1,14 +1,14 @@
 ---
-title: "A Quick Run-through of the Package Functions and Goals"
-output: pdf_document
-  # md_document:
-  #   variant: markdown_github
+title: "regimeDetectionMeasures: An R Package for Calculating Multiple Regime Detection Measures of a Multivariable Datum"
+output: #pdf_document #unsilence this and silence lines 4 & 5 to generate PDF afte rmajor change
+  md_document:
+    variant: markdown_github
 author: "Jessica L. Burnett"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 tags: [regime shift, ecology]
 ---
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(include=FALSE, fig.align='center', out.width = "85%")
+knitr::opts_chunk$set(echo=TRUE, fig.align='center', out.width = "85%")
 ```
 
 # About 
@@ -33,19 +33,28 @@ This package calculates multiple metrics which I have categorized into two types
 
 The UNIVARIABLE metrics are calculated using a moving-window analysis and can handle only individual state variables. That is, you will get one measurement per state variable. The  COMPOSITE metrics can handle an infinite number of state variables, and will return a single measurement at each time point. It should be noted  that the **Fisher Information** can be calculated using multiple methods (see the function description for `rdm_window_analysis` for more details).
 
-# Install pakage and load 
+# Install package and load
+
 ```{r, echo=TRUE, warning=FALSE, message=FALSE}
 devtools::install_github("trashbirdecology/regimedetectionmeasures", force=FALSE)
+```
+
+Load the package
+```{r, echo=TRUE, warning=FALSE, message=FALSE}
 library(regimeDetectionMeasures)
+ggplot2::theme_set(theme_bw())
 ```
 
 # Munge and explore the original data
 The function munge_orig_dat will munge your original dataset. If no data is provided in the argument `data`, it will download an example dataset from [Spanbauer][1] *[link to original data](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0108936). 
+
 ```{r, echo=TRUE}
 origData <-  munge_orig_dat(example = TRUE)
-glimpse(origData)
+# glimpse(origData)
 ```
+
 If the argument for `fill` is not specified, the function `munge_orig_dat` will fill in missing species by time observations with zero ('0'). If data are true zeroes, in that a missing observation is not an NA, but is rather something else, this can be specified:
+
 ```{r, echo=TRUE}
 origData <- munge_orig_dat(example = TRUE, fill=NA) %>% glimpse()
 ```
@@ -53,7 +62,7 @@ origData <- munge_orig_dat(example = TRUE, fill=NA) %>% glimpse()
 Next, we can visualzie the original data using a few different functions:
 
 We can plot the original time series:
-```{r}
+```{r, echo=TRUE}
 plot_orig_data(data = origData)
 ```
 
@@ -69,13 +78,15 @@ plot_richness(data = origData,
               print = T)
 ```
 
-# Calculate metrics: velocity and distance travelled
+# Calculate Regime Detection Measures: Velocity and Distance Travelled
 
 Next, we want to calculate the distance travelled, velocity, and acceleration measures. This requires the data input `dataInDist` to have the following column names: c("sortVar", "variable","value"). If the column 'site' exists, and multiple sites are sampled, then the metrics will be calculated at each site independent of one another. Our example data [1] has a unique site, 'Foy' (Foy Lake).
 
-```{r, echo = TRUE}
-distances <- calculate_distanceTravelled(origData, derivs = T)
-glimpse(distances)
+```{r}
+distance.results <- calculate_distanceTravelled(origData, derivs = TRUE) %>% 
+    gather(key=metricType, value=metricValue, -cellID,-sortVar)
+# glimpse(distance.results)
+unique(distance.results$metricType) 
 ```
 This function outputs the following variables: 
 - cellID: this is imputed, and can be ignored. This is used for the package `bbsRDM`
@@ -86,4 +97,43 @@ This function outputs the following variables:
 -d2sdt2: this is the acceleration of **s** at each time step. This is the second derivative of **s**, **s^''**.
 
 
+# Calculate Regime Detection Measures: Fisher Information, Variance Index and other early warning signals 
+
+Calculate Fisher Inforamtion, Variance Index, and other univariate early warning signals using a moving-window approach. Results are all given in a long formatted data frame.
+```{r}
+# remove the site variable
+ews.results <- rdm_window_analysis(origData %>% dplyr::select(-site))
+glimpse(ews.results)
+```
+
+
+Note the default of this function is to return VI (variance index), FI (fisher information), central tendencies and variance, CV (coefficient of variation), and skewness (using the mean and mode calculations):
+```{r}
+ews.results %>% distinct(metricType)
+```
+
+
+# Visualize the Results
+
+## Fisher Information & Variance Index
+Use any method to visualize the results. Here, we use `ggplot` to visualize FI and VI, since these are metrics obtained for multiple species over time, rather than a single species over time.
+```{r}
+fi.vi <- ews.results %>% filter(metricType  %in% c("FI_Eqn7.12", "VI"))
+
+# Visualize using the window stop time, since these were moving window anlayses
+ggplot(data = fi.vi, aes(x=winStop, y = metricValue))+
+    geom_point() +
+    facet_wrap(~metricType, scales = "free_y")
+```
+
+
+## Distance Travelled and Velocity
+Use any method to visualize the results. Here, we use `ggplot` to visualize the distance travelled and the velocity of the distance travelled.
+```{r}
+
+# Visualize using the window stop time, since these were moving window anlayses
+ggplot(data = distance.results, aes(x=sortVar, y = metricValue))+
+    geom_line() +
+    facet_wrap(~metricType, scales = "free_y")+xlab("years before 1950")
+```
 
