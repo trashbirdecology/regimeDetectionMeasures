@@ -1,18 +1,15 @@
-#' @title Calculate the regime detection measured within a moving window.
-#' @param dataInRDM A data frame with columns:
-#'  - **sortVar**: usually time or some spatial dimension
-#'  - **variable**: usually species
-#'  - **value**: observations about the variable (e.g., count)
+#' @title  Calculate the regime detection measured within a moving window.
+#' @description This function is a wrapper for calculating various regime detection measures within a moving window.
+#' @param dataInRDM A data frame with columns: sortVar: usually time or some spatial dimension; variable: usually species; value: observations about the variable (e.g., count)
 #' @param winMove Number as proportion of each time series to be included in the moving windows. Default = 0.25 (25% of data included in each window).
 #' @param min.windowdat Minimum # of data points in each window to include in calculations. Default = 2.
-#' @param overrideSiteErr
-#' @param fill Used in the function 'calculate_VI()'. Fill value for missing data. Default = 0
+#' @param fill Used in the function 'calculate_VI'. Fill value for missing data. Default = 0
 #' @param min.window.dat Used in calc_FisherInformation. Default = 2 data points
 #' @param to.calc Which measures to calculate. VI variance index. FI Fisher Information. EWS 1st through 4th moments, etc. Default = ALL measures.
-#' @export
+#' @export rdm_window_analysis
+#'
 rdm_window_analysis <- function(dataInRDM,
                                 winMove = 0.25,
-                                overrideSiteErr = F,
                                 min.window.dat = 2,
                                 fi.equation = '7.12',
                                 to.calc = c('VI', 'FI', 'EWS'),

@@ -2,7 +2,8 @@
 % Please edit documentation in R/plots_originalData.R
 \name{plot_richness}
 \alias{plot_richness}
-\title{Plot species richness over time for the original data}
+\title{Plot species richness over time for the original data
+This function plots species richness at each time unit. Here, species richness is the total number of unique variables with unit measurement (e.g., abundance) > 0 and not NA.}
 \usage{
 plot_richness(data, example = F, print = T, save = F,
   xLabel = "time")
@@ -16,7 +17,7 @@ plot_richness(data, example = F, print = T, save = F,
 Function returns a data frame in long format with columns specifying site name, time (or spatial unit), variable (e.g. species identity), and value (e.g. species count).
 }
 \description{
-Plot species richness over time for the original data
+This function plots the species richness over time as a function of the total unique variables within each time
 }
 \examples{
 df <- munge_orig_dat()

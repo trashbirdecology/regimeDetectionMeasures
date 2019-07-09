@@ -2,7 +2,8 @@
 % Please edit documentation in R/plots_originalData.R
 \name{plot_orig_data}
 \alias{plot_orig_data}
-\title{Plot original data}
+\title{Plot original data
+This function plots variables as % relative abundance of variable *x* a time *t*. Missing observations are treated as zeroes. Variables with unit == zero are not considered at time *t*.}
 \usage{
 plot_orig_data(data, example = F, print = T, save = F,
   xLabel = "time")
@@ -19,6 +20,7 @@ Function returns a data frame in long format with columns specifying site name, 
 }
 \description{
 Plot original data
+This function plots variables as % relative abundance of variable *x* a time *t*. Missing observations are treated as zeroes. Variables with unit == zero are not considered at time *t*.
 }
 \examples{
 df <- munge_orig_dat()

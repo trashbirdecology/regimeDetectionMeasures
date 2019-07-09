@@ -22,3 +22,8 @@ Calculate the `distance travelled` by the entire system.
 \details{
 Also calculates the velocity and acceleration of the entire system over the time series.
 }
+\author{
+Jessica L. Burnett
+
+Nathaniel B. Price
+}

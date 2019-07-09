@@ -2,12 +2,7 @@
 title: "A Quick Run-through of the Package Functions and Goals"
 author: "Jessica Burnett"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette:
-        fig_caption: yes
-vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output: pdf_document
 ---
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(results = "hide", cache = TRUE, cache.path = "_cache/", message = FALSE, warning=FALSE, eval=TRUE, echo=FALSE, error=FALSE, fig.align='center',
@@ -36,6 +31,12 @@ This package calculates multiple metrics which I have categorized into two types
 
 
 The UNIVARIABLE metrics are calculated using a moving-window analysis and can handle only individual state variables. That is, you will get one measurement per state variable. The  COMPOSITE metrics can handle an infinite number of state variables, and will return a single measurement at each time point. It should be noted  that the **Fisher Information** can be calculated using multiple methods (see the function description for `rdm_window_analysis` for more details).
+
+# Install pakage and load 
+```{r}
+devtools::install_github("trashbirdecology/regimedetectionmeasures", force=FALSE, dependencies = TRUE)
+library(regimeDetectionMeasures)
+```
 
 # Munge and explore the original data
 The function munge_orig_dat will munge your original dataset. If no data is provided in the argument `data`, it will download an example dataset from [Spanbauer][1] *[link to original data](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0108936). 
