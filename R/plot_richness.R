@@ -6,7 +6,6 @@
 #' @return Function returns a data frame in long format with columns specifying site name, time (or spatial unit), variable (e.g. species identity), and value (e.g. species count).
 #' @param xLabel Option to change the xLabel on resultant ggplot from "time" to ...
 #' @references Spanbauer, Trisha L., et al. "Prolonged instability prior to a regime shift." PLoS One 9.10 (2014): e108936.
-#' @examples
 
 plot_richness <-
     function(data,
