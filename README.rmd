@@ -1,8 +1,8 @@
 ---
 title: "regimeDetectionMeasures: An R Package for Calculating Multiple Regime Detection Measures of a Multivariable Datum"
-output: #pdf_document #unsilence this and silence lines 4 & 5 to generate PDF afte rmajor change
-  md_document:
-    variant: markdown_github
+output: pdf_document #unsilence this and silence lines 4 & 5 to generate PDF afte rmajor change
+  # md_document:
+    # variant: markdown_github
 author: "Jessica L. Burnett"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 tags: [regime shift, ecology]
@@ -13,9 +13,8 @@ knitr::opts_chunk$set(echo=TRUE, fig.align='center', out.width = "85%")
 
 # About 
 
-This package will calculate a various regime detection metrics that have been used to 'detect ecological regime shifts'. A 'new' metric, **distance travelled** is also calculated (Burnett and others, *in prep*). 
+This package calculates various regime detection metrics that have been used to detect ecological regime shifts. A 'new' metric, distance travelled (and the velocity of distance travelled) is also calculated.  Functions for calculating the  following regime detection measures are provided:
 
-This package calculates multiple metrics which I have categorized into two types:
 1. COMPOSITE:
     1. Distance travelled -see also package [`distanceTravelled`](https://github.com/TrashBirdEcology/distanceTravelled). 
     1. Fisher Information
