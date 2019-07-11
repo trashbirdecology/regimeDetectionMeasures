@@ -7,10 +7,8 @@
 
 calculate_distanceTravelled <-
     function(dataInDist,
-             derivs = T,
-             print = T) {
-
-
+             derivs = TRUE,
+             print = TRUE) {
         distances <- dataInDist %>% group_by(variable) %>%
             arrange(variable, sortVar) %>%
             mutate(dx = value - lag(value)) %>%
@@ -26,20 +24,17 @@ calculate_distanceTravelled <-
             ungroup()
 
 
-        if (derivs == T) {
+        if (derivs == TRUE) {
             distances <- distances %>% mutate(dsdt = ((s - lag(s)) / (sortVar -
                                                                           lag(sortVar))), d2sdt2 = ((dsdt - lag(dsdt)) /
                                                                                                         (sortVar - lag(sortVar)))) %>% ungroup()
         }
-        if (print == T) {
+        if (print == TRUE) {
             head(distances)
         }
 
 
 
-
-
-
-              return(distances)
+        return(distances)
 
     }
