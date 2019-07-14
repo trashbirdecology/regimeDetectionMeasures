@@ -58,7 +58,7 @@ If the argument for `fill` is not specified, the function `munge_orig_dat` will 
 origData <- munge_orig_dat(example = TRUE, fill=NA) %>% glimpse()
 ```
 
-Next, we can visualzie the original data using a few different functions:
+Next, we can visualize the original data using a few different functions:
 
 We can plot the original time series:
 ```{r, echo=TRUE}
