@@ -4,7 +4,7 @@
 \alias{calculate_distanceTravelled}
 \title{Calculate the 'distance travelled' by a multivariable system through phase space.}
 \usage{
-calculate_distanceTravelled(dataInDist, derivs = T, print = T)
+calculate_distanceTravelled(dataInDist, derivs = TRUE, print = TRUE)
 }
 \arguments{
 \item{dataInDist}{A data frame containing the following columns: "Variable" is usually species identity;  "Value" is the observed value (e.g. count, density) of the variable; "sortVar" is the variable along which distance is calculated (e.g., time). The example data set is munged such that the sortVar column is named time.}
