@@ -2,7 +2,6 @@
 title: "regimeDetectionMeasures: An R Package for Calculating Multiple Regime Detection Measures"
 date: "Last updated: `r Sys.Date()`"
 author: "Jessica L. Burnett"
-date: "`r format(Sys.time(), '%d %B %Y')`"
 output: github_document
 tags: [regime shift, ecology]
 ---
