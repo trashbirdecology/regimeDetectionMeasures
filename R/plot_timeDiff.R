@@ -8,15 +8,15 @@
 #' @return Function returns a data frame in long format with columns specifying site name, time (or spatial unit), variable (e.g. species identity), and value (e.g. species count).
 #' @references Spanbauer, Trisha L., et al. "Prolonged instability prior to a regime shift." PLoS One 9.10 (2014): e108936.
 
-plot_timeDiff <- function(data,
+plot_time_elapsed <- function(data,
              example = FALSE,
              print = TRUE,
-             xLabel = "time"){
+             x.lab = "time"){
         temp <- data %>%
             # group_by(time) %>%
             filter(value > 0) %>%
             dplyr::select(-site, -value, -variable) %>%
-            distinct(sortVar, .keep_all = T) %>%
+            distinct(sortVar, .keep_all = TRUE) %>%
             arrange(sortVar) %>%
             #ungroup() %>%
             mutate(sampDiff = as.integer(round(abs(
@@ -27,10 +27,10 @@ plot_timeDiff <- function(data,
         p1 <- ggplot(data = temp, aes(y =  sampDiff, x = sortVar)) +
             geom_line() +
             theme_classic() +
-            xlab(xLabel)
+            xlab(x.lab)
 
 
-        if (example == T) {
+        if (example == TRUE) {
             p1 <- p1 +
                 xlab("\nyears before 1942") +
                 ylab("time since last observation\n") +
@@ -43,7 +43,7 @@ plot_timeDiff <- function(data,
                 )
         }
 
-        if (print == T) {
+        if (print == TRUE) {
             print(p1)
         }
 

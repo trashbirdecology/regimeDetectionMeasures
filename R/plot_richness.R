@@ -5,14 +5,14 @@
 #' @param example Logical. If TRUE will use the paleodiatom data from Spanbauer et al. (2014), else will use input data.
 #' @param print print plots to device when print = T. Default print = T.
 #' @return Function returns a data frame in long format with columns specifying site name, time (or spatial unit), variable (e.g. species identity), and value (e.g. species count).
-#' @param xLabel Option to change the xLabel on resultant ggplot from "time" to ...
+#' @param x.lab Option to change the x.lab on resultant ggplot from "time" to ...
 #' @references Spanbauer, Trisha L., et al. "Prolonged instability prior to a regime shift." PLoS One 9.10 (2014): e108936.
 
 plot_richness <-
     function(data,
              example = FALSE,
              print = TRUE,
-             xLabel = "time"){
+             x.lab = "time"){
         temp <- data %>%
             group_by(sortVar) %>%
             filter(value > 0) %>%
@@ -21,10 +21,10 @@ plot_richness <-
         p1 <- ggplot(data = temp, aes(y =  nSpp, x = sortVar)) +
             geom_line() +
             theme_classic() +
-            xlab(xLabel)
+            xlab(x.lab)
 
 
-        if (example == T) {
+        if (example == TRUE) {
             p1 <- p1 +
                 xlab("\nyears before 1942") +
                 ylab("time since last observation\n") +
@@ -37,7 +37,7 @@ plot_richness <-
                 )
         }
 
-        if (print == T) {
+        if (print == TRUE) {
             print(p1)
         }
 

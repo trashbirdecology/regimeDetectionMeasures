@@ -11,95 +11,98 @@ knitr::opts_chunk$set(echo=TRUE, fig.align='center', out.width = "85%")
 
 # About 
 
-This package calculates various regime detection metrics that have been used to detect ecological regime shifts. A 'new' metric, distance travelled (and the velocity of distance travelled) is also calculated.  Functions for calculating the  following regime detection measures are provided:
+This package calculates various regime detection metrics that have been used to detect ecological regime shifts. A 'new' metric, distance travelled (and the velocity of distance travelled) is also calculated.  Functions for calculating the  following regime detection measures
 
-1. COMPOSITE:
-    1. Distance travelled -see also package [`distanceTravelled`](https://github.com/TrashBirdEcology/distanceTravelled). 
-    1. Fisher Information
-    1. Variance Index
+## Using multivariable data
+The  COMPOSITE metrics can handle an infinite number of state variables, and will return a single measurement at each time point.
+1. Distance travelled -see also package [`distanceTravelled`](https://github.com/TrashBirdEcology/distanceTravelled). 
+1. Fisher Information (moving window and velocity methods)
+1. Variance Index
 
-1. UNIVARIABLE:
-    1. Skewness (mean and mode versions)
-    1. Kurtosis
-    1. Variance
-    1. Mean
-    1. Mode
-    1. Coefficient of variation, CV
-    1. Autocorrelation lag-1 (using `stats::acf`)
+## Using univariate data
+Univariate metrics are calculated using a moving-window analysis and can handle only individual state variables. That is, you will get one measurement per state variable. 
+1. Skewness (options for mean and mode skewness)
+1. Kurtosis
+1. Variance
+1. Mean
+1. Mode
+1. Coefficient of variation (CV)
+1. Autocorrelation lag-1
 
 
-The UNIVARIABLE metrics are calculated using a moving-window analysis and can handle only individual state variables. That is, you will get one measurement per state variable. The  COMPOSITE metrics can handle an infinite number of state variables, and will return a single measurement at each time point. It should be noted  that the **Fisher Information** can be calculated using multiple methods (see the function description for `rdm_window_analysis` for more details).
-
-# Install package and load
-
+# Quick Overview of Package Functionality
+## Install 
 ```{r, echo=TRUE, warning=FALSE, message=FALSE}
-devtools::install_github("trashbirdecology/regimedetectionmeasures", force=FALSE)
+devtools::install_github("trashbirdecology/regimedetectionmeasures", force=FALSE, dependencies = TRUE)
+library(regimeDetectionMeasures)
 ```
 
-Load the package
-```{r, echo=TRUE, warning=FALSE, message=FALSE}
-library(regimeDetectionMeasures)
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
 ggplot2::theme_set(theme_bw())
 ```
 
-# Munge and explore the original data
-The function munge_orig_dat will munge your original dataset. If no data is provided in the argument `data`, it will download an example dataset from [Spanbauer][1] *[link to original data](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0108936). 
 
+## Example Data
+The function `get_example_data()` retrieves a multivariable times series comprising observations from a soil core from Foy Lake, Montana [Spanbauer et al. 2014](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0108936)). 
+
+```{r, echo=TRUE, message=FALSE}
+data <-  get_example_data()
+```
+
+__Alternatively, provide your own data with columns__:
+`site`: unique site id; if your data has only a single site, specify that.
+`sortVar`: the spatial or temporal index of interest (i.e., "the x-axis"). 
+`variable`: units of interest (e.g., species identities)
+`value`: measurements of variable (e.g., relative abundance)
+```{r, eval=TRUE, echo=FALSE}
+head(data, 2)
+```
+
+IMPORTANT STEP: arrange your data by the sorting variable (sortVar):
+```{r, eval=TRUE, echo=TRUE}
+data <-  arrange(data, .by_group = sortVar)
+```
+
+## Visualize the original data
+Here, we quickly visualize the paleodiatom time series
 ```{r, echo=TRUE}
-origData <-  munge_orig_dat(example = TRUE)
-# glimpse(origData)
+plot_orig_data(data = data, x.lab="time", example=TRUE)
 ```
 
-If the argument for `fill` is not specified, the function `munge_orig_dat` will fill in missing species by time observations with zero ('0'). If data are true zeroes, in that a missing observation is not an NA, but is rather something else, this can be specified:
-
-```{r, echo=TRUE}
-origData <- munge_orig_dat(example = TRUE, fill=NA) %>% glimpse()
+### Units elpased between observations
+We can also inspect the time elapsed between our observations along the `sortVar` (here, along time) using `plot_time_elapsed()`. Notice the considerable change in sampling frequency in the example data:
+```{r, fig.cap= "Sampling is irregular for the paleodiatom example data from Spanbauer et al. (2014).",  message=FALSE}
+plot_time_elapsed(data = data, example = TRUE, x.lab="time")
 ```
 
-Next, we can visualize the original data using a few different functions:
-
-We can plot the original time series:
-```{r, echo=TRUE}
-plot_orig_data(data = origData)
-```
-
-We can inspect the time beteween observations (i.e., is sampling regular, or irregular?):
-```{r, fig.cap= "Sampling is irregular for the paleodiatom example data from Spanbauer et al. (2014)."}
-plot_timeDiff(data = origData)
-```
-
-We can examine if species richness, or the number of unique state variables changes over time:
+## Unique state variables over time
+Quickly plot the change in unique number of state variables over time. This is particularly of interest for community species richess over time:
 ```{r, fig.cap = "Species richness exhibits a sharp decline before time=-2000."}
-plot_richness(data = origData,
-              example = F,
-              print = T)
+plot_richness(data,
+              example = TRUE,
+              print = TRUE 
+              )
 ```
 
-# Calculate Regime Detection Measures: Velocity and Distance Travelled
+# Calculate Regime Detection Measures
+## Velocity and Distance Travelled
 
-Next, we want to calculate the distance travelled, velocity, and acceleration measures. This requires the data input `dataInDist` to have the following column names: c("sortVar", "variable","value"). If the column 'site' exists, and multiple sites are sampled, then the metrics will be calculated at each site independent of one another. Our example data [1] has a unique site, 'Foy' (Foy Lake).
+Next, we want to calculate the distance travelled, velocity, and acceleration measures. This requires the data input to have the following column names: c("sortVar", "variable","value"). If the column 'site' exists, and multiple sites are sampled, then the metrics will be calculated at each site independent of one another.
 
-```{r}
-distance.results <- calculate_distanceTravelled(origData, derivs = TRUE) %>% 
-    gather(key=metricType, value=metricValue, -cellID,-sortVar)
-# glimpse(distance.results)
-unique(distance.results$metricType) 
+```{r, echo=TRUE}
+distances <- calc_distance(data, get.derivs =  TRUE, long.format=TRUE) 
 ```
-This function outputs the following variables: 
-- cellID: this is imputed, and can be ignored. This is used for the package `bbsRDM`
-- sortVar: this is the 'x-axis' variable; usually, this will be time, but if conducting spatial analyses, can be space (e.g. longitude)
+
 - ds: this is the total change in system variables between the current and previous time point. This value can take on any number or sign, and is uniquely calculated for every time step **except the first**
 - s: this the the *distance travelled* metric. It is used to calculate the velocity (*dsdt*), and is calculated at each time step as the cumulative sum of **s**.
 - dsdt (*v*): this is the velocity measurement. It is calculated as the speed of **S** at each time step. This is the first derivative of **s**, **s^'**
 -d2sdt2: this is the acceleration of **s** at each time step. This is the second derivative of **s**, **s^''**.
 
 
-# Calculate Regime Detection Measures: Fisher Information, Variance Index and other early warning signals 
-
-Calculate Fisher Inforamtion, Variance Index, and other univariate early warning signals using a moving-window approach. Results are all given in a long formatted data frame.
+## Fisher Information, Variance Index, and typical Early Warning Signals
+Using a moving window analysis, function `rdm_window_analysis` calculates Fisher Information, Variance Index, and other univariate early warning signals. Results are provided in a 'long' format. This function requires a dataset with only a site, unique `site`, if the site column exists
 ```{r}
-# remove the site variable
-ews.results <- rdm_window_analysis(origData %>% dplyr::select(-site))
+ews.results <- rdm_window_analysis(data)
 glimpse(ews.results)
 ```
 
@@ -129,7 +132,7 @@ Use any method to visualize the results. Here, we use `ggplot` to visualize the 
 ```{r}
 
 # Visualize using the window stop time, since these were moving window anlayses
-ggplot(data = distance.results, aes(x=sortVar, y = metricValue))+
+ggplot(data = distances, aes(x=sortVar, y = metricValue))+
     geom_line() +
     facet_wrap(~metricType, scales = "free_y")+xlab("years before 1950")
 ```

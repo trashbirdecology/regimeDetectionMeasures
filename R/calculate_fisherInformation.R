@@ -5,7 +5,7 @@
 #' @references  Mayer, Audrey L., et al. "Applications of Fisher information to the management of sustainable environmental systems." Exploratory data analysis using Fisher information. Springer, London, 2007. 217-244.
 #' @param min.window.dat The minimum number of observation points (e.g. time) within the moving window for Fisher Information to be calculated
 
-calculate_FisherInformation <-
+calc_fi <-
     function(dataInFI,
              min.window.dat = 2,
              fi.equation =  "7.12") {
@@ -20,12 +20,14 @@ calculate_FisherInformation <-
         require(kedd)
         require(caTools)
 
-        dataInFI <- dataInFI %>% mutate(TT = max(sortVar) - min(sortVar),
-                                        p = (1 / TT) * (1 / dsdt)) %>% filter(ds != 0)
+        dataInFI <-
+            dataInFI %>% mutate(TT = max(sortVar) - min(sortVar),
+                                p = (1 / TT) * (1 / dsdt)) %>% filter(ds != 0)
 
 
 
-        if (fi.equation == "7.3b" & nrow(dataInFI) > min.window.dat) {
+        if (fi.equation == "7.3b" &
+            nrow(dataInFI) > min.window.dat) {
             p <- dataInFI$p
             s <- dataInFI$s
             dp <- lead(p) - p
@@ -34,7 +36,8 @@ calculate_FisherInformation <-
             ind <- 1:(length(s) - 1)
             FItemp <- trapz(s[ind], (1 / p[ind]) * dpds[ind] ^ 2)
         }
-        if (fi.equation == "7.3c" & nrow(dataInFI) > min.window.dat) {
+        if (fi.equation == "7.3c" &
+            nrow(dataInFI) > min.window.dat) {
             q <- sqrt(dataInFI$p)
             s <- dataInFI$s
             dq <- lead(q) - q
@@ -43,7 +46,8 @@ calculate_FisherInformation <-
             ind <- 1:(length(s) - 1)
             FItemp <- 4 * trapz(s[ind], dqds[ind] ^ 2)
         }
-        if (fi.equation == "7.12" & nrow(dataInFI %>% na.omit(dsdt)) >
+        if (fi.equation == "7.12" &
+            nrow(dataInFI %>% na.omit(dsdt)) >
             min.window.dat) {
             dataInFI <- dataInFI %>% na.omit(dsdt)
             t <- dataInFI$sortVar
@@ -52,20 +56,21 @@ calculate_FisherInformation <-
             dsdt <- dataInFI$dsdt
             d2sdt2 <- dataInFI$d2sdt2
             ind <- 1:(length(s) - 1)
-            FItemp <- (1 / TT) * trapz(t[ind], d2sdt2 ^ 2 / dsdt ^ 4)
+            FItemp <-
+                (1 / TT) * trapz(t[ind], d2sdt2 ^ 2 / dsdt ^ 4)
         }
 
         # If FItemp = NA or NULL, then return nothing.
-        if(!exists('FItemp')){
+        if (!exists('FItemp')) {
             FItemp = NA
 
         }
-        if ( is.null(FItemp)   ) {
+        if (is.null(FItemp)) {
             FItemp = NA
 
         }
 
-                FItemp <- data.frame(FItemp, min(dataInFI$cellID) , min(dataInFI$cellID))
-        names(FItemp) <- c('metricValue', 'cellID_min', 'cellID_max')
+        #         FItemp <- data.frame(FItemp, min(dataInFI$cellID) , min(dataInFI$cellID))
+        # names(FItemp) <- c('metricValue', 'cellID_min', 'cellID_max')
         return(FItemp)
     }
